@@ -1,0 +1,3535 @@
+<!DOCTYPE html>
+
+<html lang="en" class="scroll-smooth">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>esc-ordinaryfh</title>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+
+    tailwind.config = {
+
+      theme: {
+
+        extend: {
+
+          fontFamily: {
+
+            sans: ['Inter', 'sans-serif'],
+
+            display: ['Orbitron', 'sans-serif'],
+
+            tech: ['Rajdhani', 'sans-serif'],
+
+          },
+
+          colors: {
+
+            void: '#07020f',
+
+            neonPurple: '#b829ff',
+
+            deepViolet: '#180533',
+
+            electricMagenta: '#e040fb',
+
+          }
+
+        }
+
+      }
+
+    }
+
+  </script>
+
+</head>
+
+<body class="bg-[#07020f] text-white font-sans antialiased overflow-x-hidden selection:bg-fuchsia-500 selection:text-white">
+  <!-- ===================================================================== -->
+
+  <!-- TOP NAVIGATION (NO LOGO ON TOP-LEFT, COMPACT WHITE BUTTON TOP-RIGHT)  -->
+
+  <!-- ===================================================================== -->
+
+  <header class="fixed top-0 left-0 right-0 z-40 pointer-events-none">
+
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 pt-6 sm:pt-8 flex items-center justify-between">
+
+      <!-- Active Season Pass / Server Status Badge -->
+
+      <div id="seasonPassActiveBadge" class="hidden pointer-events-auto px-3.5 py-1.5 rounded-full bg-fuchsia-950/85 border border-fuchsia-400/50 backdrop-blur-md flex items-center gap-2 shadow-[0_0_20px_rgba(217,70,239,0.4)]">
+
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+
+        <span class="font-tech text-xs font-bold uppercase tracking-widest text-amber-300">SEASON 09 PASS ACTIVE</span>
+
+      </div>
+
+      <div class="ml-auto">
+
+        <button
+
+          id="menuToggleBtn"
+
+          aria-label="Open Navigation Menu"
+
+          class="pointer-events-auto w-10 h-10 sm:w-11 sm:h-11 bg-white hover:bg-fuchsia-50 text-[#1b112c] rounded-md shadow-[0_0_25px_rgba(184,41,255,0.45)] hover:shadow-[0_0_32px_rgba(224,64,251,0.75)] flex flex-col items-center justify-center gap-[4px] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+
+        >
+
+          <span class="w-4 h-[2px] bg-[#1e1330] rounded-full transition-transform duration-300"></span>
+
+          <span class="w-4 h-[2px] bg-[#1e1330] rounded-full transition-opacity duration-300"></span>
+
+          <span class="w-4 h-[2px] bg-[#1e1330] rounded-full transition-transform duration-300"></span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+  <!-- ===================================================================== -->
+
+  <!-- SLIDE-OUT NAVIGATION DRAWER                                           -->
+
+  <!-- ===================================================================== -->
+
+  <div id="navBackdrop" class="fixed inset-0 bg-[#05010a]/80 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+  <aside
+
+    id="navDrawer"
+
+    aria-hidden="true"
+
+    class="fixed top-0 right-0 h-full w-72 sm:w-80 bg-[#0d041d]/95 border-l border-fuchsia-500/25 backdrop-blur-xl z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col justify-between p-8 shadow-[-20px_0_60px_rgba(130,20,220,0.3)]"
+
+  >
+
+    <div>
+
+      <div class="flex items-center justify-between pb-6 border-b border-purple-500/20">
+
+        <span class="font-tech uppercase tracking-[0.25em] text-xs text-fuchsia-300/80 font-semibold">Navigation</span>
+
+        <button
+
+          id="menuCloseBtn"
+
+          aria-label="Close Navigation Menu"
+
+          class="w-9 h-9 rounded-md bg-white/10 hover:bg-white text-white hover:text-[#1b112c] flex items-center justify-center transition-colors duration-200 cursor-pointer"
+
+        >
+
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+
+          </svg>
+
+        </button>
+
+      </div>
+      <nav class="mt-8 flex flex-col gap-2">
+
+        <button onclick="closeDrawer(); launchBattleRoyale('NEON SYNDICATE');" class="w-full group flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium text-fuchsia-200 hover:text-white bg-fuchsia-600/20 hover:bg-fuchsia-600/35 border border-fuchsia-400/40 transition-all cursor-pointer">
+
+          <span class="font-display text-sm tracking-widest uppercase">Play Battle Royale</span>
+
+          <span class="text-xs text-emerald-400 font-tech font-bold">PLAY</span>
+
+        </button>
+
+        <button onclick="closeDrawer(); openSettingsModal('hud');" class="w-full group flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium text-purple-100 hover:text-white bg-white/5 hover:bg-fuchsia-600/25 border border-purple-500/25 hover:border-fuchsia-400/50 transition-all cursor-pointer">
+
+          <span class="font-display text-sm tracking-widest uppercase">Settings & HUD</span>
+
+          <span class="text-xs text-fuchsia-300 font-tech font-bold">CFG</span>
+
+        </button>
+
+        <a href="#hero" class="nav-link group flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-fuchsia-600/20 border border-transparent hover:border-fuchsia-500/30 transition-all">
+
+          <span class="font-display text-sm tracking-widest uppercase">Home</span>
+
+          <span class="text-xs text-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity">01</span>
+
+        </a>
+
+        <a href="#games" class="nav-link group flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-fuchsia-600/20 border border-transparent hover:border-fuchsia-500/30 transition-all">
+
+          <span class="font-display text-sm tracking-widest uppercase">Games</span>
+
+          <span class="text-xs text-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity">02</span>
+
+        </a>
+
+        <a href="#tournaments" class="nav-link group flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-fuchsia-600/20 border border-transparent hover:border-fuchsia-500/30 transition-all">
+
+          <span class="font-display text-sm tracking-widest uppercase">Tournaments</span>
+
+          <span class="text-xs text-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity">03</span>
+
+        </a>
+
+        <a href="#community" class="nav-link group flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-fuchsia-600/20 border border-transparent hover:border-fuchsia-500/30 transition-all">
+
+          <span class="font-display text-sm tracking-widest uppercase">Community</span>
+
+          <span class="text-xs text-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity">04</span>
+
+        </a>
+
+        <a href="#store" class="nav-link group flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium text-white/90 hover:text-white hover:bg-fuchsia-600/20 border border-transparent hover:border-fuchsia-500/30 transition-all">
+
+          <span class="font-display text-sm tracking-widest uppercase">Store</span>
+
+          <span class="text-xs text-fuchsia-400 opacity-0 group-hover:opacity-100 transition-opacity">05</span>
+
+        </a>
+
+      </nav>
+
+    </div>
+    <div class="pt-6 border-t border-purple-500/20">
+
+      <div class="flex items-center gap-2.5 text-xs text-purple-200/75 mb-4">
+
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+
+        <span>NEXUS SERVERS ONLINE • 42,890 PLAYERS</span>
+
+      </div>
+
+      <button
+
+        onclick="closeDrawer(); launchBattleRoyale('NEON SYNDICATE');"
+
+        class="w-full py-3 bg-white hover:bg-fuchsia-100 text-[#190e2b] font-tech font-bold text-sm tracking-[0.2em] uppercase rounded transition-all cursor-pointer shadow-[0_0_20px_rgba(184,41,255,0.4)]"
+
+      >
+
+        Launch Battle Royale
+
+      </button>
+
+    </div>
+
+  </aside>
+  <!-- ===================================================================== -->
+
+  <!-- HERO SECTION (100VH FULL-SCREEN CYBERPUNK CITYSCAPE + CENTERED HERO)  -->
+
+  <!-- ===================================================================== -->
+
+  <section id="hero" class="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden select-none">
+
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_18%,#4c1182_0%,#220742_48%,#0a0216_100%)]"></div>
+
+    <canvas id="cyberCityCanvas" class="absolute inset-0 w-full h-full block"></canvas>
+
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(25,5,52,0.22)_0%,rgba(6,1,15,0.68)_100%)] pointer-events-none"></div>
+
+    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#07020f] to-transparent pointer-events-none"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
+
+      <p class="text-white/95 font-sans font-normal text-base sm:text-xl md:text-[22px] tracking-[0.03em] mb-3 sm:mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
+
+        Level Up Your Gaming Life
+
+      </p>
+      <h1 class="font-display font-extrabold uppercase text-white text-3xl sm:text-5xl md:text-6xl lg:text-[66px] tracking-[0.09em] leading-[1.12] mb-7 sm:mb-9 drop-shadow-[0_4px_26px_rgba(168,38,255,0.55)]">
+
+        ESCAPE THE ORDINARY
+
+      </h1>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+
+        <button
+
+          id="letsPlayBtn"
+
+          onclick="launchBattleRoyale('NEON SYNDICATE')"
+
+          class="bg-white hover:bg-[#faf5ff] text-[#28193d] font-tech font-bold uppercase text-sm sm:text-[15px] tracking-[0.14em] px-9 sm:px-11 py-3.5 sm:py-4 rounded-[2px] shadow-[0_10px_35px_rgba(184,41,255,0.5)] hover:shadow-[0_14px_45px_rgba(224,64,251,0.85)] transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 cursor-pointer"
+
+        >
+
+          LET'S PLAY
+
+        </button>
+
+        <button
+
+          onclick="openSettingsModal('hud')"
+
+          class="bg-[#160730]/85 hover:bg-fuchsia-600/35 text-white border border-fuchsia-400/50 font-tech font-bold uppercase text-sm sm:text-[15px] tracking-[0.14em] px-6 py-3.5 sm:py-4 rounded-[2px] backdrop-blur-md transition-all duration-200 cursor-pointer"
+
+        >
+
+          SETTINGS & HUD
+
+        </button>
+
+      </div>
+
+    </div>
+    <a
+
+      href="#games"
+
+      aria-label="Scroll to Featured Games"
+
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5 text-purple-200/60 hover:text-white transition-colors duration-300"
+
+    >
+
+      <span class="font-tech text-[11px] uppercase tracking-[0.28em]">Explore</span>
+
+      <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+
+      </svg>
+
+    </a>
+
+  </section>
+  <!-- ===================================================================== -->
+
+  <!-- BELOW-THE-FOLD: FEATURED GAMES (ALL 3 MODES NOW PLAYABLE!)            -->
+
+  <!-- ===================================================================== -->
+
+  <section id="games" class="relative py-24 px-6 sm:px-10 bg-[#07020f] border-t border-purple-500/15">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
+
+        <div>
+
+          <span class="font-tech uppercase tracking-[0.28em] text-fuchsia-400 text-xs font-semibold">Cyber Arena Roster</span>
+
+          <h2 class="font-display text-2xl sm:text-4xl font-bold uppercase tracking-wider text-white mt-2">
+
+            Featured Worlds
+
+          </h2>
+
+        </div>
+
+        <p class="text-purple-200/70 text-sm max-w-md">
+
+          Step into hyper-immersive neon battlegrounds engineered for competitive speed and zero-latency action.
+
+        </p>
+
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+
+        <!-- Game Card 1: NEON SYNDICATE -->
+
+        <article class="group relative rounded-xl bg-gradient-to-b from-[#170830] to-[#0c031a] border border-purple-500/25 hover:border-fuchsia-400/60 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
+
+          <div class="h-48 relative overflow-hidden bg-[#1a0638]">
+
+            <svg viewBox="0 0 400 200" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+              <defs>
+
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+
+                  <stop offset="0%" stop-color="#3b0764"/>
+
+                  <stop offset="50%" stop-color="#701a75"/>
+
+                  <stop offset="100%" stop-color="#1e1b4b"/>
+
+                </linearGradient>
+
+              </defs>
+
+              <rect width="400" height="200" fill="url(#g1)"/>
+
+              <polygon points="0,200 120,60 220,200" fill="#120426" opacity="0.85"/>
+
+              <polygon points="160,200 280,40 400,200" fill="#090214" opacity="0.9"/>
+
+              <circle cx="280" cy="65" r="28" fill="#e879f9" opacity="0.35"/>
+
+              <line x1="0" y1="165" x2="400" y2="165" stroke="#d946ef" stroke-width="1.5" opacity="0.5"/>
+
+              <line x1="0" y1="180" x2="400" y2="180" stroke="#a855f7" stroke-width="1" opacity="0.35"/>
+
+            </svg>
+
+            <span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-fuchsia-600/85 backdrop-blur-md font-tech text-xs font-bold uppercase tracking-widest">
+
+              Tactical Battle Royale
+
+            </span>
+
+          </div>
+
+          <div class="p-6">
+
+            <div class="flex items-center justify-between text-xs text-purple-300/75 mb-2 font-tech uppercase tracking-wider">
+
+              <span>20-Player Arena</span>
+
+              <span class="text-emerald-400">18,420 Online</span>
+
+            </div>
+
+            <h3 class="font-display text-lg font-bold tracking-wide text-white mb-2">NEON SYNDICATE</h3>
+
+            <p class="text-sm text-purple-200/70 mb-5 leading-relaxed">
+
+              Vertical rooftop infiltration across rain-slicked megastructures with cybernetic class abilities.
+
+            </p>
+
+            <button onclick="openLobbyModal('NEON SYNDICATE', 'Tactical Battle Royale • Classic Violet Sector')" class="w-full py-2.5 rounded bg-white/10 hover:bg-white text-white hover:text-[#1b112c] font-tech font-bold text-xs uppercase tracking-[0.2em] transition-colors cursor-pointer">
+
+              Play Battle Royale
+
+            </button>
+
+          </div>
+
+        </article>
+        <!-- Game Card 2: VOID VELOCITY -->
+
+        <article class="group relative rounded-xl bg-gradient-to-b from-[#170830] to-[#0c031a] border border-purple-500/25 hover:border-fuchsia-400/60 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
+
+          <div class="h-48 relative overflow-hidden bg-[#1a0638]">
+
+            <svg viewBox="0 0 400 200" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+              <defs>
+
+                <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0">
+
+                  <stop offset="0%" stop-color="#0f0524"/>
+
+                  <stop offset="55%" stop-color="#581c87"/>
+
+                  <stop offset="100%" stop-color="#c026d3"/>
+
+                </linearGradient>
+
+              </defs>
+
+              <rect width="400" height="200" fill="url(#g2)"/>
+
+              <path d="M0,150 Q200,90 400,150 L400,200 L0,200 Z" fill="#090214"/>
+
+              <path d="M40,170 L185,115 L215,115 L360,170" fill="none" stroke="#f0abfc" stroke-width="2.5"/>
+
+              <circle cx="200" cy="85" r="36" fill="none" stroke="#e879f9" stroke-width="2" stroke-dasharray="6 4"/>
+
+            </svg>
+
+            <span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-cyan-600/85 backdrop-blur-md font-tech text-xs font-bold uppercase tracking-widest">
+
+              Hyper-Speed Blitz
+
+            </span>
+
+          </div>
+
+          <div class="p-6">
+
+            <div class="flex items-center justify-between text-xs text-purple-300/75 mb-2 font-tech uppercase tracking-wider">
+
+              <span>Turbo Royale Mode</span>
+
+              <span class="text-emerald-400">11,905 Online</span>
+
+            </div>
+
+            <h3 class="font-display text-lg font-bold tracking-wide text-white mb-2">VOID VELOCITY</h3>
+
+            <p class="text-sm text-purple-200/70 mb-5 leading-relaxed">
+
+              Break Mach-3 through suspended plasma tunnels with +35% movement speed and ultra-fast dash cooldowns.
+
+            </p>
+
+            <button onclick="openLobbyModal('VOID VELOCITY', 'Turbo Speed Mode • Fast Storm & Low Cooldowns')" class="w-full py-2.5 rounded bg-white/10 hover:bg-white text-white hover:text-[#1b112c] font-tech font-bold text-xs uppercase tracking-[0.2em] transition-colors cursor-pointer">
+
+              Enter Queue
+
+            </button>
+
+          </div>
+
+        </article>
+        <!-- Game Card 3: ASTRAL CITADEL -->
+
+        <article class="group relative rounded-xl bg-gradient-to-b from-[#170830] to-[#0c031a] border border-purple-500/25 hover:border-fuchsia-400/60 overflow-hidden transition-all duration-300 hover:-translate-y-1 shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
+
+          <div class="h-48 relative overflow-hidden bg-[#1a0638]">
+
+            <svg viewBox="0 0 400 200" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+              <defs>
+
+                <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+
+                  <stop offset="0%" stop-color="#4a044e"/>
+
+                  <stop offset="100%" stop-color="#090214"/>
+
+                </linearGradient>
+
+              </defs>
+
+              <rect width="400" height="200" fill="url(#g3)"/>
+
+              <rect x="75" y="45" width="50" height="155" fill="#14052b" stroke="#a855f7" stroke-width="1"/>
+
+              <rect x="175" y="25" width="60" height="175" fill="#0d031c" stroke="#e879f9" stroke-width="1.2"/>
+
+              <rect x="280" y="60" width="45" height="140" fill="#14052b" stroke="#a855f7" stroke-width="1"/>
+
+              <circle cx="205" cy="70" r="10" fill="#f5d0fe"/>
+
+            </svg>
+
+            <span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded bg-indigo-600/85 backdrop-blur-md font-tech text-xs font-bold uppercase tracking-widest">
+
+              Heavy Arsenal Royale
+
+            </span>
+
+          </div>
+
+          <div class="p-6">
+
+            <div class="flex items-center justify-between text-xs text-purple-300/75 mb-2 font-tech uppercase tracking-wider">
+
+              <span>Full Loadout Drop</span>
+
+              <span class="text-emerald-400">12,565 Online</span>
+
+            </div>
+
+            <h3 class="font-display text-lg font-bold tracking-wide text-white mb-2">ASTRAL CITADEL</h3>
+
+            <p class="text-sm text-purple-200/70 mb-5 leading-relaxed">
+
+              Drop in with full 100 Shield and a 3-weapon heavy loadout to raid orbital vaults in a persistent metropolis.
+
+            </p>
+
+            <button onclick="openLobbyModal('ASTRAL CITADEL', 'Heavy Arsenal Mode • Max Shield & 3 Weapons')" class="w-full py-2.5 rounded bg-white/10 hover:bg-white text-white hover:text-[#1b112c] font-tech font-bold text-xs uppercase tracking-[0.2em] transition-colors cursor-pointer">
+
+              Enter Queue
+
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+  <!-- ===================================================================== -->
+
+  <!-- BELOW-THE-FOLD: LIVE TOURNAMENTS                                      -->
+
+  <!-- ===================================================================== -->
+
+  <section id="tournaments" class="py-20 px-6 sm:px-10 bg-[#0a0316] border-t border-purple-500/15">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="mb-10">
+
+        <span class="font-tech uppercase tracking-[0.28em] text-fuchsia-400 text-xs font-semibold">Esports Circuit</span>
+
+        <h2 class="font-display text-2xl sm:text-4xl font-bold uppercase tracking-wider text-white mt-2">
+
+          Live Tournaments
+
+        </h2>
+
+      </div>
+      <div class="space-y-4">
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-xl bg-[#130629]/90 border border-purple-500/25 hover:border-fuchsia-400/50 transition-colors">
+
+          <div class="flex items-start sm:items-center gap-4">
+
+            <div class="w-12 h-12 rounded-lg bg-fuchsia-600/20 border border-fuchsia-400/40 flex items-center justify-center font-display font-bold text-fuchsia-300 shrink-0">
+
+              01
+
+            </div>
+
+            <div>
+
+              <div class="flex items-center gap-2.5">
+
+                <span class="px-2 py-0.5 text-[11px] font-tech uppercase tracking-widest rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">Live Now</span>
+
+                <span class="text-xs text-purple-300/70 font-tech uppercase tracking-wider">Neon Syndicate • Finals</span>
+
+              </div>
+
+              <h3 class="font-display text-lg font-bold text-white mt-1">VIOLET HORIZON CHAMPIONSHIP</h3>
+
+            </div>
+
+          </div>
+
+          <div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-none border-purple-500/15">
+
+            <div class="text-left md:text-right">
+
+              <div class="text-xs text-purple-300/65 font-tech uppercase tracking-wider">Prize Pool</div>
+
+              <div class="font-display text-lg font-bold text-fuchsia-300">$50,000</div>
+
+            </div>
+
+            <button onclick="openLobbyModal('VIOLET HORIZON CHAMPIONSHIP', 'Esports Finals Arena • High-Intensity Ranked Match')" class="px-5 py-2.5 bg-white hover:bg-fuchsia-100 text-[#1d1030] font-tech font-bold text-xs uppercase tracking-[0.18em] rounded transition-colors cursor-pointer">
+
+              Join Match
+
+            </button>
+
+          </div>
+
+        </div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-xl bg-[#130629]/90 border border-purple-500/25 hover:border-fuchsia-400/50 transition-colors">
+
+          <div class="flex items-start sm:items-center gap-4">
+
+            <div class="w-12 h-12 rounded-lg bg-purple-600/20 border border-purple-400/40 flex items-center justify-center font-display font-bold text-purple-300 shrink-0">
+
+              02
+
+            </div>
+
+            <div>
+
+              <div class="flex items-center gap-2.5">
+
+                <span class="px-2 py-0.5 text-[11px] font-tech uppercase tracking-widest rounded bg-purple-500/20 text-purple-200 border border-purple-400/30">Open Qualifiers</span>
+
+                <span class="text-xs text-purple-300/70 font-tech uppercase tracking-wider">Void Velocity • Open Cup</span>
+
+              </div>
+
+              <h3 class="font-display text-lg font-bold text-white mt-1">MIDNIGHT OVERDRIVE GRAND PRIX</h3>
+
+            </div>
+
+          </div>
+
+          <div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-none border-purple-500/15">
+
+            <div class="text-left md:text-right">
+
+              <div class="text-xs text-purple-300/65 font-tech uppercase tracking-wider">Prize Pool</div>
+
+              <div class="font-display text-lg font-bold text-fuchsia-300">$25,000</div>
+
+            </div>
+
+            <button id="registerGrandPrixBtn" onclick="registerTournament('MIDNIGHT OVERDRIVE GRAND PRIX')" class="px-5 py-2.5 bg-white/10 hover:bg-white text-white hover:text-[#1d1030] font-tech font-bold text-xs uppercase tracking-[0.18em] rounded transition-colors cursor-pointer">
+
+              Register
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+  <!-- ===================================================================== -->
+
+  <!-- BELOW-THE-FOLD: COMMUNITY STATS & STORE PASS                          -->
+
+  <!-- ===================================================================== -->
+
+  <section id="community" class="py-20 px-6 sm:px-10 bg-[#07020f] border-t border-purple-500/15">
+
+    <div class="max-w-7xl mx-auto">
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+
+        <div class="p-6 rounded-xl bg-[#110524] border border-purple-500/20 text-center">
+
+          <div class="font-display text-2xl sm:text-4xl font-extrabold text-white">2.4M+</div>
+
+          <div class="font-tech uppercase tracking-[0.2em] text-xs text-fuchsia-300/80 mt-2">Active Players</div>
+
+        </div>
+
+        <div class="p-6 rounded-xl bg-[#110524] border border-purple-500/20 text-center">
+
+          <div class="font-display text-2xl sm:text-4xl font-extrabold text-white">14ms</div>
+
+          <div class="font-tech uppercase tracking-[0.2em] text-xs text-fuchsia-300/80 mt-2">Global Avg Ping</div>
+
+        </div>
+
+        <div class="p-6 rounded-xl bg-[#110524] border border-purple-500/20 text-center">
+
+          <div class="font-display text-2xl sm:text-4xl font-extrabold text-white">380+</div>
+
+          <div class="font-tech uppercase tracking-[0.2em] text-xs text-fuchsia-300/80 mt-2">Weekly Tournaments</div>
+
+        </div>
+
+        <div class="p-6 rounded-xl bg-[#110524] border border-purple-500/20 text-center">
+
+          <div class="font-display text-2xl sm:text-4xl font-extrabold text-white">99.98%</div>
+
+          <div class="font-tech uppercase tracking-[0.2em] text-xs text-fuchsia-300/80 mt-2">Server Uptime</div>
+
+        </div>
+
+      </div>
+      <!-- Store / Season Pass Banner -->
+
+      <div id="store" class="rounded-2xl p-8 sm:p-12 bg-gradient-to-r from-[#24094d] via-[#3a0d78] to-[#190536] border border-fuchsia-400/35 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-[0_20px_60px_rgba(130,25,220,0.25)]">
+
+        <div class="text-center lg:text-left max-w-xl">
+
+          <span class="font-tech uppercase tracking-[0.28em] text-fuchsia-300 text-xs font-bold">Season 09 Pass</span>
+
+          <h3 class="font-display text-2xl sm:text-3xl font-extrabold uppercase tracking-wider text-white mt-2">
+
+            UNLOCK CYBER-VIOLET GEAR
+
+          </h3>
+
+          <p class="text-purple-100/80 text-sm sm:text-base mt-3">
+
+            Gain instant access to exclusive neon skins, +100 starting Shield, and cross-title XP boosters in every match.
+
+          </p>
+
+        </div>
+
+        <button
+
+          id="claimSeasonPassBtn"
+
+          onclick="claimSeason09Pass()"
+
+          class="bg-white hover:bg-fuchsia-50 text-[#231238] font-tech font-bold uppercase text-sm tracking-[0.18em] px-8 py-4 rounded-[2px] shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 transition-all cursor-pointer shrink-0"
+
+        >
+
+          Claim Access
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+  <!-- Minimalist Footer (No Logo) -->
+
+  <footer class="py-8 px-6 border-t border-purple-500/15 bg-[#05010a] text-center text-xs text-purple-300/50 font-tech uppercase tracking-[0.2em]">
+
+    © 2026 Escape The Ordinary Gaming Network • All Rights Reserved
+
+  </footer>
+  <!-- ===================================================================== -->
+
+  <!-- MATCHMAKING LOBBY MODAL (FOR ENTER QUEUE / TOURNAMENT / PASS)         -->
+
+  <!-- ===================================================================== -->
+
+  <div id="lobbyModal" class="hidden fixed inset-0 z-[55] bg-[#04010a]/85 backdrop-blur-md flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md rounded-2xl bg-gradient-to-b from-[#1a073b] to-[#0b0318] border border-fuchsia-400/50 p-7 text-center shadow-[0_0_70px_rgba(184,41,255,0.55)]">
+
+      <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-fuchsia-600/25 border border-fuchsia-400/60 flex items-center justify-center">
+
+        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+
+      </div>
+
+      <span class="font-tech text-xs font-bold uppercase tracking-[0.25em] text-fuchsia-300">NEXUS MATCHMAKING NODE</span>
+
+      <h3 id="lobbyTitle" class="font-display text-xl sm:text-2xl font-extrabold uppercase tracking-wider text-white mt-1">
+
+        NEON SYNDICATE
+
+      </h3>
+
+      <p id="lobbyDesc" class="text-xs sm:text-sm text-purple-200/80 mt-2">
+
+        Connecting to Tokyo / Singapore Low-Latency Server (14ms)...
+
+      </p>
+      <div class="my-5 p-3.5 rounded-xl bg-[#090214] border border-purple-500/25">
+
+        <div class="flex justify-between text-xs font-tech uppercase tracking-wider text-purple-300 mb-1.5">
+
+          <span id="lobbyStatusText">Contenders Ready</span>
+
+          <span id="lobbyCountText" class="font-display font-bold text-emerald-400">20 / 20</span>
+
+        </div>
+
+        <div class="w-full h-2 rounded-full bg-purple-950 overflow-hidden">
+
+          <div id="lobbyProgressBar" class="h-full bg-gradient-to-r from-fuchsia-500 to-emerald-400 transition-all duration-300" style="width: 100%"></div>
+
+        </div>
+
+      </div>
+      <div class="flex gap-3">
+
+        <button
+
+          onclick="closeLobbyModal()"
+
+          class="flex-1 py-3 rounded bg-white/10 hover:bg-white/20 text-purple-100 font-tech font-bold text-xs uppercase tracking-widest border border-purple-400/30 cursor-pointer transition-colors"
+
+        >
+
+          Cancel
+
+        </button>
+
+        <button
+
+          id="lobbyDeployBtn"
+
+          onclick="deployFromLobby()"
+
+          class="flex-1 py-3 rounded bg-white hover:bg-fuchsia-100 text-[#1b112c] font-tech font-bold text-xs uppercase tracking-[0.18em] shadow-lg cursor-pointer transition-all"
+
+        >
+
+          Deploy Now
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- ===================================================================== -->
+
+  <!-- FULL-SCREEN PLAYABLE CYBERPUNK BATTLE ROYALE ARENA OVERLAY            -->
+
+  <!-- ===================================================================== -->
+
+  <div id="brGameOverlay" class="fixed inset-0 z-50 hidden bg-[#06020e] select-none overflow-hidden">
+
+    <canvas id="brCanvas" class="block w-full h-full cursor-crosshair"></canvas>
+    <!-- Storm Damage Screen Edge Warning Pulse -->
+
+    <div id="stormWarningEdge" class="pointer-events-none fixed inset-0 border-[10px] border-fuchsia-500/0 shadow-[inset_0_0_70px_rgba(217,70,239,0)] transition-all duration-300"></div>
+    <!-- CUSTOMIZABLE HUD ELEMENT 1: TOP-LEFT PLAYER VITALS & WEAPONS -->
+
+    <div
+
+      id="hudElVitals"
+
+      data-hud-id="vitals"
+
+      data-hud-label="Player Vitals & Weapons"
+
+      style="top: 12px; left: 12px;"
+
+      class="hud-customizable fixed z-20 w-[calc(100vw-24px)] sm:w-auto max-w-md px-3 py-2 rounded-xl bg-[#0d041d]/88 border border-fuchsia-500/35 backdrop-blur-md shadow-xl flex flex-col gap-1.5 origin-top-left"
+
+    >
+
+      <div class="flex items-center gap-2.5">
+
+        <div class="flex items-center gap-1.5 flex-1 min-w-[84px]">
+
+          <span class="font-tech text-[11px] font-bold uppercase tracking-wider text-emerald-300">HP</span>
+
+          <div class="flex-1 h-2 rounded-full bg-emerald-950/90 overflow-hidden border border-emerald-400/35">
+
+            <div id="hudHealthBar" class="h-full bg-gradient-to-r from-emerald-500 to-lime-400 transition-all duration-100" style="width: 100%"></div>
+
+          </div>
+
+          <span id="hudHealthVal" class="font-display text-[11px] font-bold text-emerald-200 w-7 text-right">100</span>
+
+        </div>
+        <div class="flex items-center gap-1.5 flex-1 min-w-[84px]">
+
+          <span class="font-tech text-[11px] font-bold uppercase tracking-wider text-cyan-300">SHD</span>
+
+          <div class="flex-1 h-2 rounded-full bg-cyan-950/90 overflow-hidden border border-cyan-400/35">
+
+            <div id="hudShieldBar" class="h-full bg-gradient-to-r from-cyan-400 to-sky-300 transition-all duration-100" style="width: 100%"></div>
+
+          </div>
+
+          <span id="hudShieldVal" class="font-display text-[11px] font-bold text-cyan-200 w-7 text-right">100</span>
+
+        </div>
+        <div class="flex items-center gap-1" title="Dash [Space]">
+
+          <span class="font-tech text-[10px] font-bold uppercase text-fuchsia-300">DASH</span>
+
+          <div class="w-10 h-1.5 rounded-full bg-purple-950 overflow-hidden border border-fuchsia-400/30">
+
+            <div id="hudDashBar" class="h-full bg-fuchsia-400" style="width: 100%"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="flex items-center justify-between gap-2 pt-0.5 border-t border-purple-500/20">
+
+        <div id="weaponSlotsBar" class="flex items-center gap-1"></div>
+        <div class="flex items-center gap-1.5">
+
+          <span id="hudWeaponName" class="font-tech text-[11px] font-bold uppercase tracking-wider text-fuchsia-300 hidden sm:inline">PULSE RIFLE</span>
+
+          <span id="hudAmmo" class="font-display text-xs font-extrabold text-white">30 / ∞</span>
+
+          <button
+
+            onclick="reloadPlayerWeapon()"
+
+            class="px-1.5 py-0.5 rounded bg-white/10 hover:bg-white text-white hover:text-[#1b112c] font-tech text-[10px] font-bold uppercase tracking-wider cursor-pointer transition-colors"
+
+            title="Reload (R)"
+
+          >
+
+            [R]
+
+          </button>
+
+        </div>
+
+      </div>
+      <div class="text-[10px] font-tech uppercase tracking-wider text-purple-200/70 leading-none">
+
+        WASD Move • Click/Stick Shoot • Space Dash • R Reload
+
+      </div>
+
+    </div>
+    <!-- CUSTOMIZABLE HUD ELEMENT 2: TOP-CENTER MATCH PILLS & BANNERS -->
+
+    <div
+
+      id="hudElMatch"
+
+      data-hud-id="match"
+
+      data-hud-label="Match Status & Alerts"
+
+      style="top: 12px; left: 50%; transform: translateX(-50%);"
+
+      class="hud-customizable fixed z-20 flex flex-col items-center gap-1.5 pointer-events-none origin-top"
+
+    >
+
+      <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+
+        <div class="px-3 py-1.5 rounded-lg bg-[#0d041d]/88 border border-fuchsia-500/35 backdrop-blur-md flex items-center gap-2 shadow-lg">
+
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+
+          <span class="font-tech text-[11px] uppercase tracking-widest text-purple-300">Alive:</span>
+
+          <span id="hudAlive" class="font-display text-xs sm:text-sm font-extrabold text-white">20/20</span>
+
+        </div>
+        <div class="px-3 py-1.5 rounded-lg bg-[#0d041d]/88 border border-fuchsia-500/35 backdrop-blur-md flex items-center gap-1.5 shadow-lg">
+
+          <span class="font-tech text-[11px] uppercase tracking-widest text-fuchsia-300">Kills:</span>
+
+          <span id="hudKills" class="font-display text-xs sm:text-sm font-extrabold text-amber-300">0</span>
+
+        </div>
+        <div class="px-3 py-1.5 rounded-lg bg-[#0d041d]/88 border border-purple-500/35 backdrop-blur-md flex items-center gap-1.5 shadow-lg">
+
+          <span id="hudStormLabel" class="font-tech text-[11px] uppercase tracking-widest text-fuchsia-300">Storm:</span>
+
+          <span id="hudStormTimer" class="font-display text-xs sm:text-sm font-bold text-white">20s</span>
+
+        </div>
+
+      </div>
+      <div id="arenaBanner" class="opacity-0 transition-opacity duration-300">
+
+        <div class="px-4 py-1 rounded-full bg-fuchsia-950/92 border border-fuchsia-400/60 shadow-[0_0_24px_rgba(217,70,239,0.5)]">
+
+          <span id="arenaBannerText" class="font-display text-[11px] sm:text-xs font-bold uppercase tracking-[0.18em] text-fuchsia-200">
+
+            SAFE ZONE SHRINKING!
+
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- CUSTOMIZABLE HUD ELEMENT 3: TOP-RIGHT RADAR, KILL FEED, SETTINGS, JOYSTICK & EXIT -->
+
+    <div
+
+      id="hudElRadar"
+
+      data-hud-id="radar"
+
+      data-hud-label="Radar, Kill Feed & Menu"
+
+      style="top: 12px; right: 12px;"
+
+      class="hud-customizable fixed z-20 flex items-start gap-2 origin-top-right"
+
+    >
+
+      <div id="killFeedContainer" class="hidden sm:flex flex-col items-end gap-1 max-w-[180px] pointer-events-none"></div>
+      <div id="minimapWrapper" class="relative rounded-xl overflow-hidden border border-fuchsia-400/50 bg-[#080214]/90 shadow-[0_0_20px_rgba(184,41,255,0.35)] shrink-0">
+
+        <canvas id="brMinimap" width="112" height="112" class="block w-20 h-20 sm:w-24 sm:h-24"></canvas>
+
+        <span class="absolute bottom-0.5 left-1.5 font-tech text-[9px] uppercase tracking-widest text-purple-300/80 pointer-events-none">Radar</span>
+
+      </div>
+      <div class="flex flex-col gap-1.5 shrink-0">
+
+        <button
+
+          onclick="exitBattleRoyale()"
+
+          class="px-3 py-1.5 rounded-md bg-white hover:bg-rose-500 text-[#1b112c] hover:text-white font-tech font-bold text-xs uppercase tracking-widest shadow-lg cursor-pointer transition-colors"
+
+        >
+
+          Exit
+
+        </button>
+
+        <button
+
+          onclick="openSettingsModal('hud')"
+
+          class="px-2.5 py-1 rounded-md bg-fuchsia-600/80 hover:bg-fuchsia-500 border border-fuchsia-300/60 text-[10px] font-tech font-bold uppercase tracking-wider text-white shadow cursor-pointer transition-colors flex items-center justify-center gap-1"
+
+        >
+
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+
+          </svg>
+
+          Settings
+
+        </button>
+
+        <button
+
+          id="toggleTouchBtn"
+
+          onclick="toggleTouchControls()"
+
+          class="px-2.5 py-1 rounded-md bg-[#160730]/90 hover:bg-fuchsia-600/40 border border-fuchsia-400/40 text-[10px] font-tech font-bold uppercase tracking-wider text-purple-100 cursor-pointer transition-colors"
+
+        >
+
+          Joy: ON
+
+        </button>
+
+      </div>
+
+    </div>
+    <!-- DUAL VIRTUAL JOYSTICKS & CUSTOMIZABLE TOUCH ACTION BUTTONS -->
+
+    <div id="touchControlsLayer" class="fixed inset-0 z-20 pointer-events-none">
+
+      <div id="floatingLeftZone" class="hidden fixed inset-y-0 left-0 w-1/2 pointer-events-auto"></div>
+
+      <div id="floatingRightZone" class="hidden fixed inset-y-0 right-0 w-1/2 pointer-events-auto"></div>
+      <!-- CUSTOMIZABLE HUD ELEMENT 4: LEFT MOVE JOYSTICK -->
+
+      <div
+
+        id="hudElLeftJoy"
+
+        data-hud-id="leftJoy"
+
+        data-hud-label="Left Move Joystick"
+
+        style="bottom: 28px; left: 28px;"
+
+        class="hud-customizable fixed pointer-events-auto touch-none flex items-center justify-center origin-center"
+
+      >
+
+        <div
+
+          id="leftJoyBase"
+
+          class="relative w-32 h-32 rounded-full bg-purple-950/45 border-2 border-fuchsia-400/50 backdrop-blur-sm shadow-[0_0_25px_rgba(184,41,255,0.28)] flex items-center justify-center transition-opacity select-none cursor-grab active:cursor-grabbing"
+
+        >
+
+          <div class="w-16 h-16 rounded-full border border-fuchsia-400/20 pointer-events-none"></div>
+
+          <span class="absolute top-2 font-tech text-[9px] uppercase tracking-widest text-fuchsia-300/60 pointer-events-none">MOVE</span>
+
+          <div
+
+            id="leftJoyKnob"
+
+            class="absolute w-12 h-12 rounded-full bg-gradient-to-br from-fuchsia-400 to-purple-600 border-2 border-white shadow-[0_0_18px_rgba(232,121,249,0.85)] pointer-events-none"
+
+          ></div>
+
+        </div>
+
+      </div>
+      <!-- CUSTOMIZABLE HUD ELEMENT 5: RIGHT AIM & AUTO-FIRE JOYSTICK -->
+
+      <div
+
+        id="hudElRightJoy"
+
+        data-hud-id="rightJoy"
+
+        data-hud-label="Right Aim & Fire Joystick"
+
+        style="bottom: 28px; right: 28px;"
+
+        class="hud-customizable fixed pointer-events-auto touch-none flex items-center justify-center origin-center"
+
+      >
+
+        <div
+
+          id="rightJoyBase"
+
+          class="relative w-32 h-32 rounded-full bg-rose-950/45 border-2 border-amber-400/55 backdrop-blur-sm shadow-[0_0_25px_rgba(251,191,36,0.25)] flex items-center justify-center transition-opacity select-none cursor-grab active:cursor-grabbing"
+
+        >
+
+          <div class="w-20 h-20 rounded-full border border-dashed border-amber-300/35 pointer-events-none"></div>
+
+          <span id="rightJoyTag" class="absolute top-2 font-tech text-[9px] uppercase tracking-widest text-amber-300/75 pointer-events-none">AIM+FIRE</span>
+
+          <div
+
+            id="rightJoyKnob"
+
+            class="absolute w-12 h-12 rounded-full bg-gradient-to-br from-amber-300 to-rose-500 border-2 border-white shadow-[0_0_18px_rgba(251,191,36,0.85)] pointer-events-none flex items-center justify-center"
+
+          >
+
+            <span class="w-2 h-2 rounded-full bg-white"></span>
+
+          </div>
+
+        </div>
+
+      </div>
+      <!-- CUSTOMIZABLE HUD ELEMENT 6: TOUCH ACTION BUTTONS (DASH, RELOAD, SWAP, DEDICATED FIRE) -->
+
+      <div
+
+        id="hudElTouchActions"
+
+        data-hud-id="touchActions"
+
+        data-hud-label="Action Buttons (Dash/Reload/Swap)"
+
+        style="bottom: 172px; right: 26px;"
+
+        class="hud-customizable fixed pointer-events-auto touch-none flex items-center gap-2.5 origin-center"
+
+      >
+
+        <button
+
+          id="touchDashBtn"
+
+          class="px-3.5 py-3 rounded-full bg-cyan-500/35 hover:bg-cyan-500/55 border-2 border-cyan-300/75 font-tech font-bold text-[11px] uppercase tracking-wider text-white shadow-[0_0_16px_rgba(34,211,238,0.45)] active:scale-90 transition-transform cursor-pointer"
+
+        >
+
+          DASH
+
+        </button>
+
+        <button
+
+          id="touchReloadBtn"
+
+          class="px-3.5 py-3 rounded-full bg-purple-600/45 hover:bg-purple-500/65 border-2 border-fuchsia-300/75 font-tech font-bold text-[11px] uppercase tracking-wider text-white shadow-[0_0_16px_rgba(217,70,239,0.45)] active:scale-90 transition-transform cursor-pointer"
+
+        >
+
+          RELOAD
+
+        </button>
+
+        <button
+
+          id="touchSwapBtn"
+
+          class="px-3.5 py-3 rounded-full bg-amber-500/35 hover:bg-amber-500/55 border-2 border-amber-300/75 font-tech font-bold text-[11px] uppercase tracking-wider text-white shadow-[0_0_16px_rgba(251,191,36,0.4)] active:scale-90 transition-transform cursor-pointer"
+
+        >
+
+          SWAP
+
+        </button>
+
+        <button
+
+          id="touchDedicatedFireBtn"
+
+          class="hidden w-16 h-16 rounded-full bg-rose-600/70 border-2 border-white font-display font-extrabold text-[11px] uppercase tracking-wider text-white shadow-[0_0_24px_rgba(244,63,94,0.8)] active:scale-90 transition-transform cursor-pointer"
+
+        >
+
+          FIRE
+
+        </button>
+
+      </div>
+
+    </div>
+    <!-- LIVE DRAG-AND-DROP CUSTOM HUD LAYOUT EDITOR TOOLBAR -->
+
+    <div id="hudEditorOverlay" class="hidden fixed inset-0 z-40 pointer-events-none">
+
+      <div class="absolute inset-0 bg-[#05010c]/45 backdrop-blur-[1px] pointer-events-none" style="background-image: linear-gradient(to right, rgba(217,70,239,0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(217,70,239,0.12) 1px, transparent 1px); background-size: 32px 32px;"></div>
+      <div class="pointer-events-auto fixed bottom-5 left-1/2 -translate-x-1/2 w-[94vw] max-w-2xl rounded-2xl bg-[#110524]/95 border border-fuchsia-400/60 p-4 shadow-[0_0_50px_rgba(184,41,255,0.65)] backdrop-blur-xl">
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-purple-500/25">
+
+          <div>
+
+            <span class="font-tech text-[10px] font-bold uppercase tracking-[0.25em] text-fuchsia-300 block">Interactive HUD Layout Editor</span>
+
+            <h3 id="hudEditorSelectedLabel" class="font-display text-sm font-bold text-white">Drag any glowing box • Tap one to adjust</h3>
+
+          </div>
+
+          <div class="flex items-center gap-2">
+
+            <button
+
+              onclick="resetCustomHudLayout()"
+
+              class="px-3 py-1.5 rounded bg-white/10 hover:bg-white/20 text-purple-100 font-tech font-bold text-xs uppercase tracking-wider border border-purple-400/30 cursor-pointer transition-colors"
+
+            >
+
+              Reset Default
+
+            </button>
+
+            <button
+
+              onclick="exitHudLayoutEditor(true)"
+
+              class="px-4 py-1.5 rounded bg-white hover:bg-emerald-300 text-[#1b112c] font-tech font-bold text-xs uppercase tracking-wider shadow cursor-pointer transition-colors"
+
+            >
+
+              Save & Resume
+
+            </button>
+
+          </div>
+
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3">
+
+          <div>
+
+            <div class="flex justify-between text-xs font-tech uppercase tracking-wider text-purple-200 mb-1">
+
+              <span>Selected Element Scale</span>
+
+              <span id="hudElScaleVal" class="font-display font-bold text-fuchsia-300">100%</span>
+
+            </div>
+
+            <input
+
+              id="hudElScaleSlider"
+
+              type="range"
+
+              min="60"
+
+              max="150"
+
+              value="100"
+
+              oninput="updateSelectedHudElementProp('scale', this.value)"
+
+              class="w-full accent-fuchsia-500 cursor-pointer"
+
+            />
+
+          </div>
+          <div>
+
+            <div class="flex justify-between text-xs font-tech uppercase tracking-wider text-purple-200 mb-1">
+
+              <span>Selected Element Opacity</span>
+
+              <span id="hudElOpacityVal" class="font-display font-bold text-cyan-300">100%</span>
+
+            </div>
+
+            <input
+
+              id="hudElOpacitySlider"
+
+              type="range"
+
+              min="30"
+
+              max="100"
+
+              value="100"
+
+              oninput="updateSelectedHudElementProp('opacity', this.value)"
+
+              class="w-full accent-cyan-400 cursor-pointer"
+
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- MATCH END OVERLAY: #1 VICTORY ROYALE OR ELIMINATED -->
+
+    <div id="brEndScreen" class="hidden fixed inset-0 z-30 bg-[#05010c]/88 backdrop-blur-md flex items-center justify-center p-6">
+
+      <div class="max-w-md w-full rounded-2xl bg-gradient-to-b from-[#1c083b] to-[#0b0318] border border-fuchsia-400/50 p-8 text-center shadow-[0_0_70px_rgba(184,41,255,0.55)]">
+
+        <span id="endBadge" class="inline-block px-3 py-1 rounded-full bg-fuchsia-500/20 border border-fuchsia-400/40 font-tech text-xs font-bold uppercase tracking-[0.25em] text-fuchsia-300 mb-3">
+
+          MATCH COMPLETE
+
+        </span>
+
+        <h2 id="endTitle" class="font-display text-2xl sm:text-4xl font-black uppercase tracking-wider text-white">
+
+          #1 VICTORY ROYALE
+
+        </h2>
+
+        <p id="endSubtitle" class="text-sm text-purple-200/80 mt-2">
+
+          You outlasted every rival in the Neon Sector!
+
+        </p>
+        <div class="grid grid-cols-3 gap-3 my-6">
+
+          <div class="p-3 rounded-xl bg-[#090214] border border-purple-500/25">
+
+            <div class="font-tech text-[11px] uppercase tracking-wider text-purple-300/70">Rank</div>
+
+            <div id="endRank" class="font-display text-lg font-extrabold text-amber-300 mt-0.5">#1</div>
+
+          </div>
+
+          <div class="p-3 rounded-xl bg-[#090214] border border-purple-500/25">
+
+            <div class="font-tech text-[11px] uppercase tracking-wider text-purple-300/70">Eliminations</div>
+
+            <div id="endKills" class="font-display text-lg font-extrabold text-fuchsia-300 mt-0.5">0</div>
+
+          </div>
+
+          <div class="p-3 rounded-xl bg-[#090214] border border-purple-500/25">
+
+            <div class="font-tech text-[11px] uppercase tracking-wider text-purple-300/70">Survival</div>
+
+            <div id="endTime" class="font-display text-lg font-extrabold text-emerald-300 mt-0.5">01:42</div>
+
+          </div>
+
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3">
+
+          <button
+
+            onclick="restartBattleRoyale()"
+
+            class="flex-1 py-3.5 bg-white hover:bg-fuchsia-100 text-[#1d0f33] font-tech font-bold text-sm uppercase tracking-[0.18em] rounded-[2px] shadow-lg cursor-pointer transition-all"
+
+          >
+
+            Play Again
+
+          </button>
+
+          <button
+
+            onclick="exitBattleRoyale()"
+
+            class="flex-1 py-3.5 bg-white/10 hover:bg-white/20 text-white font-tech font-bold text-sm uppercase tracking-[0.18em] rounded-[2px] border border-purple-400/30 cursor-pointer transition-all"
+
+          >
+
+            Back to Home
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- ===================================================================== -->
+
+  <!-- CYBERPUNK SETTINGS MODAL (1. CUSTOM HUD | 2. JOYSTICK & CONTROLS)      -->
+
+  <!-- ===================================================================== -->
+
+  <div id="settingsModal" class="hidden fixed inset-0 z-[60] bg-[#04010a]/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6">
+
+    <div class="w-full max-w-xl rounded-2xl bg-gradient-to-b from-[#170733] to-[#0b0318] border border-fuchsia-400/45 shadow-[0_0_70px_rgba(184,41,255,0.5)] overflow-hidden flex flex-col max-h-[90vh]">
+
+      <div class="px-6 py-4 bg-[#100424] border-b border-purple-500/25 flex items-center justify-between">
+
+        <div>
+
+          <span class="font-tech text-[11px] font-bold uppercase tracking-[0.25em] text-fuchsia-400">System Configuration</span>
+
+          <h2 class="font-display text-lg sm:text-xl font-extrabold uppercase tracking-wider text-white">Arena Settings</h2>
+
+        </div>
+
+        <button
+
+          onclick="closeSettingsModal()"
+
+          aria-label="Close Settings"
+
+          class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#1b112c] flex items-center justify-center transition-colors cursor-pointer"
+
+        >
+
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+
+          </svg>
+
+        </button>
+
+      </div>
+      <div class="grid grid-cols-2 gap-2 p-3 bg-[#0c031c] border-b border-purple-500/20">
+
+        <button
+
+          id="tabBtnHud"
+
+          onclick="switchSettingsTab('hud')"
+
+          class="py-2.5 px-3 rounded-lg font-display text-xs sm:text-sm font-bold uppercase tracking-wider bg-fuchsia-600/35 border border-fuchsia-400 text-white shadow-[0_0_16px_rgba(217,70,239,0.35)] cursor-pointer transition-all"
+
+        >
+
+          1. Custom HUD
+
+        </button>
+
+        <button
+
+          id="tabBtnJoystick"
+
+          onclick="switchSettingsTab('joystick')"
+
+          class="py-2.5 px-3 rounded-lg font-display text-xs sm:text-sm font-bold uppercase tracking-wider bg-white/5 border border-purple-500/25 text-purple-200/75 hover:text-white cursor-pointer transition-all"
+
+        >
+
+          2. Joystick
+
+        </button>
+
+      </div>
+      <div class="p-6 overflow-y-auto space-y-5">
+
+        <!-- TAB 1: CUSTOM HUD -->
+
+        <div id="settingsTabHud" class="space-y-5">
+
+          <div class="p-4 rounded-xl bg-gradient-to-r from-fuchsia-950/70 to-purple-950/70 border border-fuchsia-400/45 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+            <div>
+
+              <h3 class="font-display text-sm font-bold uppercase tracking-wider text-white">Drag & Drop HUD Layout</h3>
+
+              <p class="text-xs text-purple-200/80 mt-1">
+
+                Move vitals, minimap, and dual joysticks anywhere on screen and customize individual size & opacity.
+
+              </p>
+
+            </div>
+
+            <button
+
+              onclick="enterHudLayoutEditor()"
+
+              class="px-4 py-2.5 rounded-lg bg-white hover:bg-fuchsia-100 text-[#1b112c] font-tech font-bold text-xs uppercase tracking-[0.18em] shadow-lg shrink-0 cursor-pointer transition-all"
+
+            >
+
+              Customize HUD
+
+            </button>
+
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25">
+
+              <div class="flex justify-between text-xs font-tech uppercase tracking-wider text-purple-200 mb-2">
+
+                <span>Master HUD Scale</span>
+
+                <span id="cfgGlobalScaleVal" class="font-display font-bold text-fuchsia-300">100%</span>
+
+              </div>
+
+              <input
+
+                id="cfgGlobalScale"
+
+                type="range"
+
+                min="70"
+
+                max="135"
+
+                value="100"
+
+                oninput="updateGlobalHudSetting('globalScale', Number(this.value))"
+
+                class="w-full accent-fuchsia-500 cursor-pointer"
+
+              />
+
+            </div>
+            <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25">
+
+              <div class="flex justify-between text-xs font-tech uppercase tracking-wider text-purple-200 mb-2">
+
+                <span>Master HUD Opacity</span>
+
+                <span id="cfgGlobalOpacityVal" class="font-display font-bold text-cyan-300">100%</span>
+
+              </div>
+
+              <input
+
+                id="cfgGlobalOpacity"
+
+                type="range"
+
+                min="40"
+
+                max="100"
+
+                value="100"
+
+                oninput="updateGlobalHudSetting('globalOpacity', Number(this.value))"
+
+                class="w-full accent-cyan-400 cursor-pointer"
+
+              />
+
+            </div>
+
+          </div>
+          <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25 space-y-3">
+
+            <span class="font-tech text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-300 block">HUD Module Visibility</span>
+            <label class="flex items-center justify-between cursor-pointer">
+
+              <span class="text-sm text-purple-100">Show Radar Minimap</span>
+
+              <input id="cfgShowMinimap" type="checkbox" checked onchange="updateGlobalHudSetting('showMinimap', this.checked)" class="w-4 h-4 accent-fuchsia-500 cursor-pointer" />
+
+            </label>
+            <label class="flex items-center justify-between cursor-pointer">
+
+              <span class="text-sm text-purple-100">Show Live Kill Feed</span>
+
+              <input id="cfgShowKillFeed" type="checkbox" checked onchange="updateGlobalHudSetting('showKillFeed', this.checked)" class="w-4 h-4 accent-fuchsia-500 cursor-pointer" />
+
+            </label>
+            <label class="flex items-center justify-between cursor-pointer">
+
+              <span class="text-sm text-purple-100">Show Top Storm & Loot Alerts</span>
+
+              <input id="cfgShowBanners" type="checkbox" checked onchange="updateGlobalHudSetting('showBanners', this.checked)" class="w-4 h-4 accent-fuchsia-500 cursor-pointer" />
+
+            </label>
+
+          </div>
+
+        </div>
+        <!-- TAB 2: JOYSTICK & TOUCH CONTROLS -->
+
+        <div id="settingsTabJoystick" class="hidden space-y-5">
+
+          <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25 flex items-center justify-between">
+
+            <div>
+
+              <h3 class="font-display text-sm font-bold uppercase tracking-wider text-white">Dual Virtual Joysticks</h3>
+
+              <p class="text-xs text-purple-200/75 mt-0.5">Left Move Stick + Right 360° Aim & Fire Stick</p>
+
+            </div>
+
+            <label class="inline-flex items-center cursor-pointer">
+
+              <input id="cfgJoyEnabled" type="checkbox" checked onchange="updateJoystickSetting('enabled', this.checked)" class="sr-only peer" />
+
+              <div class="w-11 h-6 bg-purple-950 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all relative border border-fuchsia-400/40 peer-checked:bg-fuchsia-600"></div>
+
+            </label>
+
+          </div>
+          <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25 space-y-2.5">
+
+            <span class="font-tech text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-300 block">Joystick Mode</span>
+
+            <div class="grid grid-cols-2 gap-2.5">
+
+              <button
+
+                id="joyModeFixedBtn"
+
+                onclick="updateJoystickSetting('mode', 'fixed')"
+
+                class="py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all bg-fuchsia-600/35 border-fuchsia-400 text-white"
+
+              >
+
+                Fixed Position
+
+              </button>
+
+              <button
+
+                id="joyModeFloatingBtn"
+
+                onclick="updateJoystickSetting('mode', 'floating')"
+
+                class="py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all bg-white/5 border-purple-500/25 text-purple-200/75"
+
+              >
+
+                Floating (Dynamic)
+
+              </button>
+
+            </div>
+
+            <p class="text-[11px] text-purple-300/70">
+
+              Floating mode spawns each joystick wherever your left or right thumb touches the screen.
+
+            </p>
+
+          </div>
+          <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25 space-y-2.5">
+
+            <span class="font-tech text-xs font-bold uppercase tracking-[0.2em] text-amber-300 block">Right Stick Firing Mode</span>
+
+            <div class="grid grid-cols-2 gap-2.5">
+
+              <button
+
+                id="joyFireAutoBtn"
+
+                onclick="updateJoystickSetting('autoFire', true)"
+
+                class="py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all bg-amber-500/30 border-amber-300 text-white"
+
+              >
+
+                Aim + Auto-Fire
+
+              </button>
+
+              <button
+
+                id="joyFireManualBtn"
+
+                onclick="updateJoystickSetting('autoFire', false)"
+
+                class="py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all bg-white/5 border-purple-500/25 text-purple-200/75"
+
+              >
+
+                Aim Only + Fire Btn
+
+              </button>
+
+            </div>
+
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25">
+
+              <div class="flex justify-between text-xs font-tech uppercase tracking-wider text-purple-200 mb-2">
+
+                <span>Joystick Size</span>
+
+                <span id="cfgJoySizeVal" class="font-display font-bold text-fuchsia-300">128px</span>
+
+              </div>
+
+              <input
+
+                id="cfgJoySize"
+
+                type="range"
+
+                min="96"
+
+                max="172"
+
+                value="128"
+
+                oninput="updateJoystickSetting('size', Number(this.value))"
+
+                class="w-full accent-fuchsia-500 cursor-pointer"
+
+              />
+
+            </div>
+            <div class="p-4 rounded-xl bg-[#110524] border border-purple-500/25">
+
+              <div class="flex justify-between text-xs font-tech uppercase tracking-wider text-purple-200 mb-2">
+
+                <span>Deadzone Threshold</span>
+
+                <span id="cfgJoyDeadzoneVal" class="font-display font-bold text-cyan-300">15%</span>
+
+              </div>
+
+              <input
+
+                id="cfgJoyDeadzone"
+
+                type="range"
+
+                min="5"
+
+                max="35"
+
+                value="15"
+
+                oninput="updateJoystickSetting('deadzone', Number(this.value))"
+
+                class="w-full accent-cyan-400 cursor-pointer"
+
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="px-6 py-4 bg-[#100424] border-t border-purple-500/25 flex items-center justify-between gap-3">
+
+        <button
+
+          onclick="resetAllUserSettings()"
+
+          class="px-4 py-2 rounded-lg bg-white/10 hover:bg-rose-500/30 text-purple-200 hover:text-white font-tech font-bold text-xs uppercase tracking-wider border border-purple-400/25 cursor-pointer transition-colors"
+
+        >
+
+          Reset All
+
+        </button>
+
+        <button
+
+          onclick="closeSettingsModal()"
+
+          class="px-6 py-2.5 rounded-lg bg-white hover:bg-fuchsia-100 text-[#1b112c] font-tech font-bold text-xs uppercase tracking-[0.2em] shadow-lg cursor-pointer transition-all"
+
+        >
+
+          Done
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- ===================================================================== -->
+
+  <!-- SCRIPTS: CYBERPUNK CITYSCAPE + FULL 60FPS BATTLE ROYALE ENGINE        -->
+
+  <!-- ===================================================================== -->
+
+  <script>
+
+    // -----------------------------------------------------------------------
+
+    // 1. Navigation Drawer & Portal Modals (Lobby, Tournament, Season Pass)
+
+    // -----------------------------------------------------------------------
+
+    const menuToggleBtn = document.getElementById('menuToggleBtn');
+
+    const menuCloseBtn = document.getElementById('menuCloseBtn');
+
+    const navDrawer = document.getElementById('navDrawer');
+
+    const navBackdrop = document.getElementById('navBackdrop');
+
+    const navLinks = document.querySelectorAll('.nav-link');
+    let seasonPassUnlocked = false;
+
+    let activeLobbyMode = 'NEON SYNDICATE';
+
+    let lobbyTimer = null;
+    function openDrawer() {
+
+      navBackdrop.classList.remove('hidden');
+
+      requestAnimationFrame(() => {
+
+        navBackdrop.classList.remove('opacity-0');
+
+        navDrawer.classList.remove('translate-x-full');
+
+        navDrawer.setAttribute('aria-hidden', 'false');
+
+      });
+
+    }
+    function closeDrawer() {
+
+      navBackdrop.classList.add('opacity-0');
+
+      navDrawer.classList.add('translate-x-full');
+
+      navDrawer.setAttribute('aria-hidden', 'true');
+
+      setTimeout(() => {
+
+        navBackdrop.classList.add('hidden');
+
+      }, 300);
+
+    }
+    menuToggleBtn.addEventListener('click', openDrawer);
+
+    menuCloseBtn.addEventListener('click', closeDrawer);
+
+    navBackdrop.addEventListener('click', closeDrawer);
+
+    navLinks.forEach(link => link.addEventListener('click', closeDrawer));
+    function openLobbyModal(title, desc = 'Connecting to Low-Latency Arena Server...') {
+
+      activeLobbyMode = title;
+
+      document.getElementById('lobbyTitle').textContent = title;
+
+      document.getElementById('lobbyDesc').textContent = desc;
+
+      document.getElementById('lobbyModal').classList.remove('hidden');
+      let count = 14;
+
+      const countEl = document.getElementById('lobbyCountText');
+
+      const barEl = document.getElementById('lobbyProgressBar');
+
+      const statusEl = document.getElementById('lobbyStatusText');
+
+      countEl.textContent = `${count} / 20`;
+
+      barEl.style.width = `${(count / 20) * 100}%`;
+
+      statusEl.textContent = 'Finding Contenders...';
+      clearInterval(lobbyTimer);
+
+      lobbyTimer = setInterval(() => {
+
+        count++;
+
+        if (count >= 20) {
+
+          count = 20;
+
+          clearInterval(lobbyTimer);
+
+          statusEl.textContent = 'Match Ready!';
+
+        }
+
+        countEl.textContent = `${count} / 20`;
+
+        barEl.style.width = `${(count / 20) * 100}%`;
+
+      }, 220);
+
+    }
+    function closeLobbyModal() {
+
+      clearInterval(lobbyTimer);
+
+      document.getElementById('lobbyModal').classList.add('hidden');
+
+    }
+    function deployFromLobby() {
+
+      closeLobbyModal();
+
+      launchBattleRoyale(activeLobbyMode);
+
+    }
+    function registerTournament(name) {
+
+      const btn = document.getElementById('registerGrandPrixBtn');
+
+      if (btn) {
+
+        btn.textContent = 'REGISTERED ✓';
+
+        btn.className = 'px-5 py-2.5 bg-emerald-500/25 text-emerald-300 border border-emerald-400/60 font-tech font-bold text-xs uppercase tracking-[0.18em] rounded cursor-pointer';
+
+      }
+
+      openLobbyModal(name, 'Qualifier Slot Confirmed! Ready to drop into tournament lobby.');
+
+    }
+    function claimSeason09Pass() {
+
+      seasonPassUnlocked = true;
+
+      const btn = document.getElementById('claimSeasonPassBtn');
+
+      if (btn) {
+
+        btn.textContent = 'SEASON 09 UNLOCKED ✓';
+
+        btn.className = 'bg-emerald-400 text-[#190536] font-tech font-bold uppercase text-sm tracking-[0.18em] px-8 py-4 rounded-[2px] shadow-[0_0_30px_rgba(52,211,153,0.6)] cursor-pointer shrink-0';
+
+      }
+
+      const badge = document.getElementById('seasonPassActiveBadge');
+
+      if (badge) badge.classList.remove('hidden');
+
+      openLobbyModal('SEASON 09 VIP ARENA', 'Cyber-Violet Gear & +100 Max Shield Bonus Activated!');
+
+    }
+    document.addEventListener('keydown', (e) => {
+
+      if (e.key === 'Escape') {
+
+        closeDrawer();
+
+        closeLobbyModal();
+
+        if (!document.getElementById('settingsModal').classList.contains('hidden')) {
+
+          closeSettingsModal();
+
+        } else if (hudEditorState.active) {
+
+          exitHudLayoutEditor(true);
+
+        }
+
+      }
+
+    });
+    // -----------------------------------------------------------------------
+
+    // 1B. Custom HUD & Dual Virtual Joystick Settings Manager (localStorage)
+
+    // -----------------------------------------------------------------------
+
+    const STORAGE_KEY_SETTINGS = 'eto_br_custom_settings_v2';
+    const DEFAULT_USER_SETTINGS = {
+
+      hud: {
+
+        globalScale: 100,
+
+        globalOpacity: 100,
+
+        showMinimap: true,
+
+        showKillFeed: true,
+
+        showBanners: true,
+
+        elements: {
+
+          vitals: { x: null, y: null, scale: 100, opacity: 100 },
+
+          match: { x: null, y: null, scale: 100, opacity: 100 },
+
+          radar: { x: null, y: null, scale: 100, opacity: 100 },
+
+          leftJoy: { x: null, y: null, scale: 100, opacity: 100 },
+
+          rightJoy: { x: null, y: null, scale: 100, opacity: 100 },
+
+          touchActions: { x: null, y: null, scale: 100, opacity: 100 }
+
+        }
+
+      },
+
+      joystick: {
+
+        enabled: true, // Enabled by default so on-screen joysticks are always ready & playable
+
+        mode: 'fixed',
+
+        autoFire: true,
+
+        size: 128,
+
+        deadzone: 15
+
+      }
+
+    };
+    function loadUserSettings() {
+
+      try {
+
+        const raw = localStorage.getItem(STORAGE_KEY_SETTINGS);
+
+        if (!raw) return JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS));
+
+        const parsed = JSON.parse(raw);
+
+        return {
+
+          hud: {
+
+            ...DEFAULT_USER_SETTINGS.hud,
+
+            ...(parsed.hud || {}),
+
+            elements: {
+
+              ...DEFAULT_USER_SETTINGS.hud.elements,
+
+              ...((parsed.hud && parsed.hud.elements) || {})
+
+            }
+
+          },
+
+          joystick: {
+
+            ...DEFAULT_USER_SETTINGS.joystick,
+
+            ...(parsed.joystick || {})
+
+          }
+
+        };
+
+      } catch (e) {
+
+        return JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS));
+
+      }
+
+    }
+    let userSettings = loadUserSettings();
+    function saveUserSettings() {
+
+      try {
+
+        localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(userSettings));
+
+      } catch (e) {}
+
+    }
+    const HUD_DEFAULT_ANCHORS = {
+
+      vitals: { top: '12px', left: '12px', right: '', bottom: '', transform: '' },
+
+      match: { top: '12px', left: '50%', right: '', bottom: '', transform: 'translateX(-50%)' },
+
+      radar: { top: '12px', left: '', right: '12px', bottom: '', transform: '' },
+
+      leftJoy: { top: '', left: '28px', right: '', bottom: '28px', transform: '' },
+
+      rightJoy: { top: '', left: '', right: '28px', bottom: '28px', transform: '' },
+
+      touchActions: { top: '', left: '', right: '26px', bottom: '172px', transform: '' }
+
+    };
+    function applyAllUserSettings() {
+
+      const globalScale = (userSettings.hud.globalScale || 100) / 100;
+
+      const globalOpacity = (userSettings.hud.globalOpacity || 100) / 100;
+      document.querySelectorAll('.hud-customizable').forEach((el) => {
+
+        const id = el.dataset.hudId;
+
+        const cfg = userSettings.hud.elements[id] || { x: null, y: null, scale: 100, opacity: 100 };
+
+        const elScale = ((cfg.scale || 100) / 100) * globalScale;
+
+        const elOpacity = ((cfg.opacity || 100) / 100) * globalOpacity;
+        if (cfg.x !== null && cfg.y !== null) {
+
+          el.style.left = `${cfg.x}px`;
+
+          el.style.top = `${cfg.y}px`;
+
+          el.style.right = 'auto';
+
+          el.style.bottom = 'auto';
+
+          el.style.transform = `scale(${elScale})`;
+
+        } else {
+
+          const def = HUD_DEFAULT_ANCHORS[id];
+
+          el.style.top = def.top;
+
+          el.style.left = def.left;
+
+          el.style.right = def.right;
+
+          el.style.bottom = def.bottom;
+
+          el.style.transform = `${def.transform} scale(${elScale})`.trim();
+
+        }
+
+        el.style.opacity = String(elOpacity);
+
+      });
+      const minimapWrap = document.getElementById('minimapWrapper');
+
+      if (minimapWrap) minimapWrap.style.display = userSettings.hud.showMinimap ? '' : 'none';
+      const killFeedEl = document.getElementById('killFeedContainer');
+
+      if (killFeedEl) killFeedEl.style.display = userSettings.hud.showKillFeed ? '' : 'none';
+      const bannerEl = document.getElementById('arenaBanner');
+
+      if (bannerEl) bannerEl.style.display = userSettings.hud.showBanners ? '' : 'none';
+      const joyEnabled = Boolean(userSettings.joystick.enabled);
+
+      if (typeof brState !== 'undefined') {
+
+        brState.touch.enabled = joyEnabled;
+
+      }
+
+      const touchLayer = document.getElementById('touchControlsLayer');
+
+      const toggleBtn = document.getElementById('toggleTouchBtn');
+
+      if (touchLayer) {
+
+        if (joyEnabled) {
+
+          touchLayer.classList.remove('hidden');
+
+          if (toggleBtn) toggleBtn.textContent = 'Joy: ON';
+
+        } else {
+
+          touchLayer.classList.add('hidden');
+
+          if (toggleBtn) toggleBtn.textContent = 'Joy: OFF';
+
+        }
+
+      }
+      const joySize = userSettings.joystick.size || 128;
+
+      const knobSize = Math.round(joySize * 0.38);
+
+      ['leftJoyBase', 'rightJoyBase'].forEach(baseId => {
+
+        const b = document.getElementById(baseId);
+
+        if (b) {
+
+          b.style.width = `${joySize}px`;
+
+          b.style.height = `${joySize}px`;
+
+        }
+
+      });
+
+      ['leftJoyKnob', 'rightJoyKnob'].forEach(knobId => {
+
+        const k = document.getElementById(knobId);
+
+        if (k) {
+
+          k.style.width = `${knobSize}px`;
+
+          k.style.height = `${knobSize}px`;
+
+        }
+
+      });
+      const isFloating = userSettings.joystick.mode === 'floating';
+
+      const floatL = document.getElementById('floatingLeftZone');
+
+      const floatR = document.getElementById('floatingRightZone');
+
+      if (floatL && floatR) {
+
+        if (joyEnabled && isFloating && !hudEditorState.active) {
+
+          floatL.classList.remove('hidden');
+
+          floatR.classList.remove('hidden');
+
+        } else {
+
+          floatL.classList.add('hidden');
+
+          floatR.classList.add('hidden');
+
+        }
+
+      }
+      const dedicatedFireBtn = document.getElementById('touchDedicatedFireBtn');
+
+      const rightTag = document.getElementById('rightJoyTag');
+
+      if (dedicatedFireBtn && rightTag) {
+
+        if (userSettings.joystick.autoFire) {
+
+          dedicatedFireBtn.classList.add('hidden');
+
+          rightTag.textContent = 'AIM+FIRE';
+
+        } else {
+
+          dedicatedFireBtn.classList.remove('hidden');
+
+          rightTag.textContent = 'AIM ONLY';
+
+        }
+
+      }
+      syncSettingsModalControls();
+
+    }
+    function syncSettingsModalControls() {
+
+      const s = userSettings;
+
+      const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+
+      const setTxt = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+
+      const setChk = (id, c) => { const el = document.getElementById(id); if (el) el.checked = c; };
+      setVal('cfgGlobalScale', s.hud.globalScale);
+
+      setTxt('cfgGlobalScaleVal', `${s.hud.globalScale}%`);
+
+      setVal('cfgGlobalOpacity', s.hud.globalOpacity);
+
+      setTxt('cfgGlobalOpacityVal', `${s.hud.globalOpacity}%`);
+
+      setChk('cfgShowMinimap', s.hud.showMinimap);
+
+      setChk('cfgShowKillFeed', s.hud.showKillFeed);
+
+      setChk('cfgShowBanners', s.hud.showBanners);
+      setChk('cfgJoyEnabled', s.joystick.enabled);
+
+      setVal('cfgJoySize', s.joystick.size);
+
+      setTxt('cfgJoySizeVal', `${s.joystick.size}px`);
+
+      setVal('cfgJoyDeadzone', s.joystick.deadzone);
+
+      setTxt('cfgJoyDeadzoneVal', `${s.joystick.deadzone}%`);
+      const fixedBtn = document.getElementById('joyModeFixedBtn');
+
+      const floatBtn = document.getElementById('joyModeFloatingBtn');
+
+      if (fixedBtn && floatBtn) {
+
+        const isFixed = s.joystick.mode === 'fixed';
+
+        fixedBtn.className = `py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+
+          isFixed ? 'bg-fuchsia-600/35 border-fuchsia-400 text-white' : 'bg-white/5 border-purple-500/25 text-purple-200/75'
+
+        }`;
+
+        floatBtn.className = `py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+
+          !isFixed ? 'bg-fuchsia-600/35 border-fuchsia-400 text-white' : 'bg-white/5 border-purple-500/25 text-purple-200/75'
+
+        }`;
+
+      }
+      const autoBtn = document.getElementById('joyFireAutoBtn');
+
+      const manBtn = document.getElementById('joyFireManualBtn');
+
+      if (autoBtn && manBtn) {
+
+        const isAuto = s.joystick.autoFire;
+
+        autoBtn.className = `py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+
+          isAuto ? 'bg-amber-500/30 border-amber-300 text-white' : 'bg-white/5 border-purple-500/25 text-purple-200/75'
+
+        }`;
+
+        manBtn.className = `py-2.5 px-3 rounded-lg border font-tech font-bold text-xs uppercase tracking-wider cursor-pointer transition-all ${
+
+          !isAuto ? 'bg-amber-500/30 border-amber-300 text-white' : 'bg-white/5 border-purple-500/25 text-purple-200/75'
+
+        }`;
+
+      }
+
+    }
+    let settingsWasMatchRunning = false;
+    function openSettingsModal(defaultTab = 'hud') {
+
+      settingsWasMatchRunning = brState.running;
+
+      if (brState.running) {
+
+        brState.running = false;
+
+        cancelAnimationFrame(brState.animId);
+
+      }
+
+      syncSettingsModalControls();
+
+      switchSettingsTab(defaultTab);
+
+      document.getElementById('settingsModal').classList.remove('hidden');
+
+    }
+    function closeSettingsModal() {
+
+      document.getElementById('settingsModal').classList.add('hidden');
+
+      if (!brOverlay.classList.contains('hidden') && settingsWasMatchRunning && brState.player && brState.player.alive && !hudEditorState.active) {
+
+        brState.running = true;
+
+        brState.lastTime = performance.now();
+
+        brState.animId = requestAnimationFrame(gameLoop);
+
+      }
+
+    }
+    function switchSettingsTab(tab) {
+
+      const hudTab = document.getElementById('settingsTabHud');
+
+      const joyTab = document.getElementById('settingsTabJoystick');
+
+      const btnHud = document.getElementById('tabBtnHud');
+
+      const btnJoy = document.getElementById('tabBtnJoystick');
+      if (tab === 'hud') {
+
+        hudTab.classList.remove('hidden');
+
+        joyTab.classList.add('hidden');
+
+        btnHud.className = 'py-2.5 px-3 rounded-lg font-display text-xs sm:text-sm font-bold uppercase tracking-wider bg-fuchsia-600/35 border border-fuchsia-400 text-white shadow-[0_0_16px_rgba(217,70,239,0.35)] cursor-pointer transition-all';
+
+        btnJoy.className = 'py-2.5 px-3 rounded-lg font-display text-xs sm:text-sm font-bold uppercase tracking-wider bg-white/5 border border-purple-500/25 text-purple-200/75 hover:text-white cursor-pointer transition-all';
+
+      } else {
+
+        hudTab.classList.add('hidden');
+
+        joyTab.classList.remove('hidden');
+
+        btnJoy.className = 'py-2.5 px-3 rounded-lg font-display text-xs sm:text-sm font-bold uppercase tracking-wider bg-fuchsia-600/35 border border-fuchsia-400 text-white shadow-[0_0_16px_rgba(217,70,239,0.35)] cursor-pointer transition-all';
+
+        btnHud.className = 'py-2.5 px-3 rounded-lg font-display text-xs sm:text-sm font-bold uppercase tracking-wider bg-white/5 border border-purple-500/25 text-purple-200/75 hover:text-white cursor-pointer transition-all';
+
+      }
+
+    }
+    function updateGlobalHudSetting(key, val) {
+
+      userSettings.hud[key] = val;
+
+      saveUserSettings();
+
+      applyAllUserSettings();
+
+    }
+    function updateJoystickSetting(key, val) {
+
+      userSettings.joystick[key] = val;
+
+      saveUserSettings();
+
+      applyAllUserSettings();
+
+    }
+    function resetAllUserSettings() {
+
+      userSettings = JSON.parse(JSON.stringify(DEFAULT_USER_SETTINGS));
+
+      saveUserSettings();
+
+      applyAllUserSettings();
+
+      if (!brOverlay.classList.contains('hidden')) {
+
+        showArenaBanner('ALL SETTINGS & HUD RESET');
+
+      }
+
+    }
+    // -----------------------------------------------------------------------
+
+    // 1C. Interactive Drag-and-Drop HUD Layout Editor
+
+    // -----------------------------------------------------------------------
+
+    let hudEditorState = {
+
+      active: false,
+
+      selectedId: 'vitals',
+
+      draggingEl: null,
+
+      offsetX: 0,
+
+      offsetY: 0
+
+    };
+    function enterHudLayoutEditor() {
+
+      if (brOverlay.classList.contains('hidden')) {
+
+        launchBattleRoyale('HUD PREVIEW ARENA');
+
+        settingsWasMatchRunning = true;
+
+      }
+      document.getElementById('settingsModal').classList.add('hidden');
+
+      brState.running = false;
+
+      cancelAnimationFrame(brState.animId);
+      hudEditorState.active = true;
+      document.getElementById('touchControlsLayer').classList.remove('hidden');
+
+      document.getElementById('floatingLeftZone').classList.add('hidden');
+
+      document.getElementById('floatingRightZone').classList.add('hidden');
+
+      document.getElementById('hudEditorOverlay').classList.remove('hidden');
+      document.querySelectorAll('.hud-customizable').forEach((el) => {
+
+        el.classList.add('ring-2', 'ring-fuchsia-400', 'cursor-move');
+
+        el.style.pointerEvents = 'auto';
+
+      });
+      selectHudEditorElement('vitals');
+
+    }
+    function exitHudLayoutEditor(save = true) {
+
+      hudEditorState.active = false;
+
+      hudEditorState.draggingEl = null;
+
+      document.getElementById('hudEditorOverlay').classList.add('hidden');
+      document.querySelectorAll('.hud-customizable').forEach((el) => {
+
+        el.classList.remove('ring-2', 'ring-fuchsia-400', 'ring-amber-300', 'cursor-move');
+
+        if (el.dataset.hudId === 'match') {
+
+          el.style.pointerEvents = 'none';
+
+        }
+
+      });
+      if (save) {
+
+        saveUserSettings();
+
+      }
+
+      applyAllUserSettings();
+      if (!brOverlay.classList.contains('hidden') && brState.player && brState.player.alive) {
+
+        brState.running = true;
+
+        brState.lastTime = performance.now();
+
+        brState.animId = requestAnimationFrame(gameLoop);
+
+        showArenaBanner('CUSTOM HUD LAYOUT SAVED');
+
+      }
+
+    }
+    function selectHudEditorElement(id) {
+
+      hudEditorState.selectedId = id;
+
+      document.querySelectorAll('.hud-customizable').forEach((el) => {
+
+        if (el.dataset.hudId === id) {
+
+          el.classList.remove('ring-fuchsia-400');
+
+          el.classList.add('ring-amber-300');
+
+          document.getElementById('hudEditorSelectedLabel').textContent = `Editing: ${el.dataset.hudLabel}`;
+
+        } else {
+
+          el.classList.remove('ring-amber-300');
+
+          el.classList.add('ring-fuchsia-400');
+
+        }
+
+      });
+      const cfg = userSettings.hud.elements[id] || { scale: 100, opacity: 100 };
+
+      document.getElementById('hudElScaleSlider').value = cfg.scale || 100;
+
+      document.getElementById('hudElScaleVal').textContent = `${cfg.scale || 100}%`;
+
+      document.getElementById('hudElOpacitySlider').value = cfg.opacity || 100;
+
+      document.getElementById('hudElOpacityVal').textContent = `${cfg.opacity || 100}%`;
+
+    }
+    function updateSelectedHudElementProp(prop, val) {
+
+      const id = hudEditorState.selectedId;
+
+      if (!id) return;
+
+      userSettings.hud.elements[id][prop] = Number(val);
+
+      if (prop === 'scale') {
+
+        document.getElementById('hudElScaleVal').textContent = `${val}%`;
+
+      } else {
+
+        document.getElementById('hudElOpacityVal').textContent = `${val}%`;
+
+      }
+
+      applyAllUserSettings();
+
+    }
+    function resetCustomHudLayout() {
+
+      Object.keys(userSettings.hud.elements).forEach((k) => {
+
+        userSettings.hud.elements[k] = { x: null, y: null, scale: 100, opacity: 100 };
+
+      });
+
+      userSettings.hud.globalScale = 100;
+
+      userSettings.hud.globalOpacity = 100;
+
+      saveUserSettings();
+
+      applyAllUserSettings();
+
+      selectHudEditorElement(hudEditorState.selectedId || 'vitals');
+
+    }
+    document.querySelectorAll('.hud-customizable').forEach((el) => {
+
+      const startDrag = (clientX, clientY, e) => {
+
+        if (!hudEditorState.active) return;
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+        const id = el.dataset.hudId;
+
+        selectHudEditorElement(id);
+
+        const rect = el.getBoundingClientRect();
+
+        hudEditorState.draggingEl = el;
+
+        hudEditorState.offsetX = clientX - rect.left;
+
+        hudEditorState.offsetY = clientY - rect.top;
+
+      };
+      el.addEventListener('mousedown', (e) => startDrag(e.clientX, e.clientY, e));
+
+      el.addEventListener('touchstart', (e) => {
+
+        if (e.touches[0]) startDrag(e.touches[0].clientX, e.touches[0].clientY, e);
+
+      }, { passive: false });
+
+    });
+    const moveHudDrag = (clientX, clientY) => {
+
+      if (!hudEditorState.active || !hudEditorState.draggingEl) return;
+
+      const el = hudEditorState.draggingEl;
+
+      const id = el.dataset.hudId;
+
+      const maxX = Math.max(0, window.innerWidth - el.offsetWidth * 0.5);
+
+      const maxY = Math.max(0, window.innerHeight - el.offsetHeight * 0.5);
+
+      const nx = Math.max(0, Math.min(maxX, clientX - hudEditorState.offsetX));
+
+      const ny = Math.max(0, Math.min(maxY, clientY - hudEditorState.offsetY));
+      userSettings.hud.elements[id].x = Math.round(nx);
+
+      userSettings.hud.elements[id].y = Math.round(ny);
+
+      applyAllUserSettings();
+
+    };
+    window.addEventListener('mousemove', (e) => moveHudDrag(e.clientX, e.clientY));
+
+    window.addEventListener('touchmove', (e) => {
+
+      if (hudEditorState.active && hudEditorState.draggingEl && e.touches[0]) {
+
+        e.preventDefault();
+
+        moveHudDrag(e.touches[0].clientX, e.touches[0].clientY);
+
+      }
+
+    }, { passive: false });
+    const endHudDrag = () => {
+
+      hudEditorState.draggingEl = null;
+
+    };
+
+    window.addEventListener('mouseup', endHudDrag);
+
+    window.addEventListener('touchend', endHudDrag);
+    // -----------------------------------------------------------------------
+
+    // 2. Full Top-Down Cyberpunk Battle Royale Engine (60FPS Canvas 2D)
+
+    // -----------------------------------------------------------------------
+
+    const brOverlay = document.getElementById('brGameOverlay');
+
+    const brCanvas = document.getElementById('brCanvas');
+
+    const brCtx = brCanvas.getContext('2d');
+
+    const minimapCanvas = document.getElementById('brMinimap');
+
+    const miniCtx = minimapCanvas.getContext('2d');
+    const WEAPON_DEFS = {
+
+      pulse: {
+
+        id: 'pulse',
+
+        name: 'Pulse Rifle',
+
+        short: 'PULSE',
+
+        color: '#38bdf8',
+
+        damage: 21,
+
+        fireRate: 0.14,
+
+        speed: 960,
+
+        spread: 0.045,
+
+        pellets: 1,
+
+        magSize: 30,
+
+        reloadTime: 1.15,
+
+        range: 760
+
+      },
+
+      smg: {
+
+        id: 'smg',
+
+        name: 'Rapid SMG',
+
+        short: 'SMG',
+
+        color: '#f472b6',
+
+        damage: 14,
+
+        fireRate: 0.075,
+
+        speed: 900,
+
+        spread: 0.11,
+
+        pellets: 1,
+
+        magSize: 42,
+
+        reloadTime: 1.0,
+
+        range: 560
+
+      },
+
+      shotgun: {
+
+        id: 'shotgun',
+
+        name: 'Plasma Shotgun',
+
+        short: 'SHOTGUN',
+
+        color: '#fb923c',
+
+        damage: 16,
+
+        fireRate: 0.68,
+
+        speed: 820,
+
+        spread: 0.24,
+
+        pellets: 6,
+
+        magSize: 8,
+
+        reloadTime: 1.35,
+
+        range: 380
+
+      },
+
+      sniper: {
+
+        id: 'sniper',
+
+        name: 'Neon Rail-Sniper',
+
+        short: 'SNIPER',
+
+        color: '#a855f7',
+
+        damage: 78,
+
+        fireRate: 0.95,
+
+        speed: 1450,
+
+        spread: 0.008,
+
+        pellets: 1,
+
+        magSize: 5,
+
+        reloadTime: 1.5,
+
+        range: 1180
+
+      }
+
+    };
+    const BOT_NAMES = [
+
+      'VortexX', 'NyxZero', 'KuroNeon', 'Cipher7', 'AstraByte',
+
+      'PhantomV', 'ZedPulse', 'NovaFlux', 'RivenAI', 'Shade99',
+
+      'KaelStorm', 'EchoSynth', 'BlazeNet', 'OnyxBlade', 'LyraVolt',
+
+      'DrifterX', 'Spectre01', 'ValkyrieZ', 'HexRunner'
+
+    ];
+    const BOT_COLORS = [
+
+      '#f43f5e', '#fb923c', '#facc15', '#4ade80', '#22d3ee',
+
+      '#818cf8', '#e879f9', '#f472b6', '#2dd4bf', '#a3e635'
+
+    ];
+    let brState = {
+
+      running: false,
+
+      animId: null,
+
+      lastTime: 0,
+
+      matchElapsed: 0,
+
+      worldSize: 2800,
+
+      mode: 'NEON SYNDICATE',
+
+      keys: {},
+
+      mouse: { x: 0, y: 0, down: false },
+
+      touch: {
+
+        enabled: true,
+
+        moveX: 0,
+
+        moveY: 0,
+
+        aimX: 0,
+
+        aimY: 0,
+
+        aimActive: false,
+
+        firing: false,
+
+        dedicatedFiring: false
+
+      },
+
+      camera: { x: 1400, y: 1400, shake: 0 },
+
+      obstacles: [],
+
+      crates: [],
+
+      pickups: [],
+
+      bullets: [],
+
+      particles: [],
+
+      fighters: [],
+
+      player: null,
+
+      storm: {
+
+        x: 1400,
+
+        y: 1400,
+
+        radius: 1950,
+
+        targetX: 1400,
+
+        targetY: 1400,
+
+        targetRadius: 1350,
+
+        phase: 1,
+
+        timer: 22,
+
+        shrinking: false,
+
+        dps: 7
+
+      }
+
+    };
+    function showArenaBanner(text) {
+
+      const banner = document.getElementById('arenaBanner');
+
+      const bannerText = document.getElementById('arenaBannerText');
+
+      bannerText.textContent = text;
+
+      banner.classList.remove('opacity-0');
+
+      clearTimeout(banner._hideTimer);
+
+      banner._hideTimer = setTimeout(() => {
+
+        banner.classList.add('opacity-0');
+
+      }, 2600);
+
+    }
+    function pushKillFeed(killerName, victimName, isPlayerInvolved) {
+
+      const container = document.getElementById('killFeedContainer');
+
+      const item = document.createElement('div');
+
+      item.className = `px-3 py-1 rounded text-[11px] font-tech tracking-wider border backdrop-blur-md transition-opacity duration-500 ${
+
+        isPlayerInvolved
+
+          ? 'bg-fuchsia-950/90 border-fuchsia-400/60 text-white font-bold'
+
+          : 'bg-[#0d041d]/80 border-purple-500/25 text-purple-200/85'
+
+      }`;
+
+      item.textContent = `${killerName} ⚡ ${victimName}`;
+
+      container.prepend(item);
+
+      while (container.children.length > 4) {
+
+        container.removeChild(container.lastChild);
+
+      }
+
+      setTimeout(() => {
+
+        item.style.opacity = '0';
+
+        setTimeout(() => item.remove(), 500);
+
+      }, 4200);
+
+    }
+    function createFighter(id, name, x, y, color, isPlayer = false) {
+
+      const isBlitz = brState.mode.includes('VELOCITY') || brState.mode.includes('OVERDRIVE');
+
+      const isHeavy = brState.mode.includes('CITADEL') || seasonPassUnlocked;
+      const starterWeapons = [{ ...WEAPON_DEFS.pulse, ammo: WEAPON_DEFS.pulse.magSize, reloading: 0 }];
+
+      if (isPlayer && brState.mode.includes('CITADEL')) {
+
+        starterWeapons.push({ ...WEAPON_DEFS.shotgun, ammo: WEAPON_DEFS.shotgun.magSize, reloading: 0 });
+
+        starterWeapons.push({ ...WEAPON_DEFS.sniper, ammo: WEAPON_DEFS.sniper.magSize, reloading: 0 });
+
+      }
+      const baseSpeed = isPlayer ? (isBlitz ? 365 : 285) : (isBlitz ? 280 : 235) + Math.random() * 25;
+      return {
+
+        id,
+
+        name,
+
+        x,
+
+        y,
+
+        vx: 0,
+
+        vy: 0,
+
+        radius: 18,
+
+        angle: 0,
+
+        color,
+
+        isPlayer,
+
+        alive: true,
+
+        hp: 100,
+
+        maxHp: 100,
+
+        shield: isPlayer ? (isHeavy ? 100 : 60) : 40,
+
+        maxShield: 100,
+
+        speed: baseSpeed,
+
+        kills: 0,
+
+        weapons: starterWeapons,
+
+        activeSlot: 0,
+
+        fireCooldown: 0,
+
+        dashCooldown: 0,
+
+        dashTime: 0,
+
+        dashDirX: 0,
+
+        dashDirY: 0,
+
+        hitFlash: 0,
+
+        aiTimer: Math.random() * 1.5,
+
+        aiTargetAngle: Math.random() * Math.PI * 2,
+
+        aiStrafeDir: Math.random() > 0.5 ? 1 : -1
+
+      };
+
+    }
+    function buildArenaMap() {
+
+      const S = brState.worldSize;
+
+      const obs = [];
+      const cx = S / 2;
+
+      const cy = S / 2;
+
+      obs.push({ x: cx - 220, y: cy - 220, w: 120, h: 36, accent: '#e879f9' });
+
+      obs.push({ x: cx + 100, y: cy - 220, w: 120, h: 36, accent: '#e879f9' });
+
+      obs.push({ x: cx - 220, y: cy + 184, w: 120, h: 36, accent: '#e879f9' });
+
+      obs.push({ x: cx + 100, y: cy + 184, w: 120, h: 36, accent: '#e879f9' });
+
+      obs.push({ x: cx - 45, y: cy - 45, w: 90, h: 90, accent: '#38bdf8' });
+      const sectors = [
+
+        [560, 560], [1400, 520], [2240, 560],
+
+        [520, 1400],              [2280, 1400],
+
+        [560, 2240], [1400, 2280], [2240, 2240],
+
+        [950, 950],  [1850, 950], [950, 1850], [1850, 1850]
+
+      ];
+      sectors.forEach(([sx, sy], idx) => {
+
+        const accent = idx % 2 === 0 ? '#c084fc' : '#22d3ee';
+
+        obs.push({ x: sx - 110, y: sy - 90, w: 85, h: 32, accent });
+
+        obs.push({ x: sx + 25, y: sy + 58, w: 85, h: 32, accent });
+
+        obs.push({ x: sx - 90, y: sy + 10, w: 32, h: 80, accent });
+
+        obs.push({ x: sx + 58, y: sy - 90, w: 32, h: 80, accent });
+
+      });
+      brState.obstacles = obs;
+
+    }
+    function circleRectCollide(cx, cy, cr, rect) {
+
+      const closestX = Math.max(rect.x, Math.min(cx, rect.x + rect.w));
+
+      const closestY = Math.max(rect.y, Math.min(cy, rect.y + rect.h));
+
+      const dx = cx - closestX;
+
+      const dy = cy - closestY;
+
+      return (dx * dx + dy * dy) < (cr * cr);
+
+    }
+    function resolveFighterObstacles(f) {
+
+      const pad = f.radius + 8;
+
+      f.x = Math.max(pad, Math.min(brState.worldSize - pad, f.x));
+
+      f.y = Math.max(pad, Math.min(brState.worldSize - pad, f.y));
+      for (let i = 0; i < brState.obstacles.length; i++) {
+
+        const r = brState.obstacles[i];
+
+        const closestX = Math.max(r.x, Math.min(f.x, r.x + r.w));
+
+        const closestY = Math.max(r.y, Math.min(f.y, r.y + r.h));
+
+        const dx = f.x - closestX;
+
+        const dy = f.y - closestY;
+
+        const distSq = dx * dx + dy * dy;
+        if (distSq < f.radius * f.radius) {
+
+          const dist = Math.sqrt(distSq) || 0.001;
+
+          const overlap = f.radius - dist;
+
+          f.x += (dx / dist) * overlap;
+
+          f.y += (dy / dist) * overlap;
+
+        }
+
+      }
+
+    }
+    function findSafeSpawnPoint(margin = 260) {
+
+      for (let tries = 0; tries < 60; tries++) {
+
+        const x = margin + Math.random() * (brState.worldSize - margin * 2);
+
+        const y = margin + Math.random() * (brState.worldSize - margin * 2);
+
+        let blocked = false;
+
+        for (const r of brState.obstacles) {
+
+          if (circleRectCollide(x, y, 36, r)) {
+
+            blocked = true;
+
+            break;
+
+          }
+
+        }
+
+        if (!blocked) return { x, y };
+
+      }
+
+      return { x: brState.worldSize / 2, y: brState.worldSize / 2 };
+
+    }
+    function spawnLootCrates() {
+
+      const crates = [];
+
+      const lootPool = ['shotgun', 'smg', 'sniper', 'shield', 'medkit'];
+
+      for (let i = 0; i < 36; i++) {
+
+        const pt = findSafeSpawnPoint(180);
+
+        const type = lootPool[i % lootPool.length];
+
+        crates.push({
+
+          x: pt.x,
+
+          y: pt.y,
+
+          radius: 16,
+
+          opened: false,
+
+          type,
+
+          pulse: Math.random() * Math.PI * 2
+
+        });
+
+      }
+
+      brState.crates = crates;
+
+      brState.pickups = [];
+
+    }
+    function openCrate(crate) {
+
+      if (crate.opened) return;
+
+      crate.opened = true;
+
+      brState.pickups.push({
+
+        x: crate.x,
+
+        y: crate.y,
+
+        type: crate.type,
+
+        bob: 0
+
+      });
+
+      spawnBurstParticles(crate.x, crate.y, '#e879f9', 12);
+
+    }
+    function spawnBurstParticles(x, y, color, count = 10) {
+
+      for (let i = 0; i < count; i++) {
+
+        const ang = Math.random() * Math.PI * 2;
+
+        const spd = 60 + Math.random() * 210;
+
+        brState.particles.push({
+
+          x,
+
+          y,
+
+          vx: Math.cos(ang) * spd,
+
+          vy: Math.sin(ang) * spd,
+
+          life: 0.25 + Math.random() * 0.3,
+
+          maxLife: 0.55,
+
+          size: 2 + Math.random() * 3,
+
+          color
+
+        });
+
+      }
+
+    }
+    function equipOrPickup(fighter, type) {
+
+      if (type === 'shield') {
+
+        if (fighter.shield >= fighter.maxShield) return false;
+
+        fighter.shield = Math.min(fighter.maxShield, fighter.shield + 50);
+
+        if (fighter.isPlayer) showArenaBanner('+50 ENERGY SHIELD');
+
+        return true;
+
+      }
+
+      if (type === 'medkit') {
+
+        if (fighter.hp >= fighter.maxHp) return false;
+
+        fighter.hp = Math.min(fighter.maxHp, fighter.hp + 50);
+
+        if (fighter.isPlayer) showArenaBanner('+50 NANO MEDKIT');
+
+        return true;
+
+      }
+      const def = WEAPON_DEFS[type];
+
+      if (!def) return false;
+      const existingIdx = fighter.weapons.findIndex(w => w.id === type);
+
+      if (existingIdx !== -1) {
+
+        fighter.weapons[existingIdx].ammo = def.magSize;
+
+        fighter.weapons[existingIdx].reloading = 0;
+
+        fighter.activeSlot = existingIdx;
+
+        if (fighter.isPlayer) showArenaBanner(`${def.name.toUpperCase()} AMMO REFILLED`);
+
+        return true;
+
+      }
+      const newWeapon = { ...def, ammo: def.magSize, reloading: 0 };
+
+      if (fighter.weapons.length < 3) {
+
+        fighter.weapons.push(newWeapon);
+
+        fighter.activeSlot = fighter.weapons.length - 1;
+
+      } else {
+
+        fighter.weapons[fighter.activeSlot] = newWeapon;
+
+      }
+
+      if (fighter.isPlayer) showArenaBanner(`EQUIPPED ${def.name.toUpperCase()}`);
+
+      return true;
+
+    }
+    function fireWeapon(fighter) {
+
+      const weapon = fighter.weapons[fighter.activeSlot];
+
+      if (!weapon || fighter.fireCooldown > 0 || weapon.reloading > 0) return;
+      if (weapon.ammo <= 0) {
+
+        weapon.reloading = weapon.reloadTime;
+
+        return;
+
+      }
+      weapon.ammo--;
+
+      fighter.fireCooldown = weapon.fireRate;
+      const muzzleDist = fighter.radius + 10;
+
+      const mx = fighter.x + Math.cos(fighter.angle) * muzzleDist;
+
+      const my = fighter.y + Math.sin(fighter.angle) * muzzleDist;
+      for (let p = 0; p < weapon.pellets; p++) {
+
+        const spreadOffset = (Math.random() - 0.5) * weapon.spread;
+
+        const shotAngle = fighter.angle + spreadOffset;
+
+        brState.bullets.push({
+
+          x: mx,
+
+          y: my,
+
+          vx: Math.cos(shotAngle) * weapon.speed,
+
+          vy: Math.sin(shotAngle) * weapon.speed,
+
+          damage: weapon.damage,
+
+          color: weapon.color,
+
+          ownerId: fighter.id,
+
+          ownerName: fighter.name,
+
+          isPlayerOwner: fighter.isPlayer,
+
+          traveled: 0,
+
+          maxRange: weapon.range
+
+        });
+
+      }
+      if (fighter.isPlayer) {
+
+        brState.camera.shake = Math.min(6, brState.camera.shake + (weapon.id === 'shotgun' || weapon.id === 'sniper' ? 4.5 : 1.6));
+
+      }
+      if (weapon.ammo === 0) {
+
+        weapon.reloading = weapon.reloadTime;
+
+      }
+
+    }
+    function reloadPlayerWeapon() {
+
+      const p = brState.player;
+
+      if (!p || !p.alive) return;
+
+      const w = p.weapons[p.activeSlot];
+
+      if (w && w.ammo < w.magSize && w.reloading <= 0) {
+
+        w.reloading = w.reloadTime;
+
+      }
+
+    }
+    function triggerPlayerDash() {
+
+      const p = brState.player;
+
+      if (!p || !p.alive || p.dashCooldown > 0) return;
+      let dx = 0;
+
+      let dy = 0;
+
+      if (brState.keys['KeyW'] || brState.keys['ArrowUp']) dy -= 1;
+
+      if (brState.keys['KeyS'] || brState.keys['ArrowDown']) dy += 1;
+
+      if (brState.keys['KeyA'] || brState.keys['ArrowLeft']) dx -= 1;
+
+      if (brState.keys['KeyD'] || brState.keys['ArrowRight']) dx += 1;
+      if (brState.touch.enabled && (Math.abs(brState.touch.moveX) > 0.1 || Math.abs(brState.touch.moveY) > 0.1)) {
+
+        dx = brState.touch.moveX;
+
+        dy = brState.touch.moveY;
+
+      }
+      if (dx === 0 && dy === 0) {
+
+        dx = Math.cos(p.angle);
+
+        dy = Math.sin(p.angle);
+
+      } else {
+
+        const len = Math.hypot(dx, dy) || 1;
+
+        dx /= len;
+
+        dy /= len;
+
+      }
+      const isBlitz = brState.mode.includes('VELOCITY') || brState.mode.includes('OVERDRIVE');
+
+      p.dashDirX = dx;
+
+      p.dashDirY = dy;
+
+      p.dashTime = 0.18;
+
+      p.dashCooldown = isBlitz ? 1.2 : 2.2;
+
+      spawnBurstParticles(p.x, p.y, '#38bdf8', 14);
+
+    }
+    function applyDamage(victim, amount, killerName, killerId, isPlayerKiller) {
+
+      if (!victim.alive) return;
+
+      victim.hitFlash = 0.12;
+      if (victim.shield > 0) {
+
+        const absorbed = Math.min(victim.shield, amount);
+
+        victim.shield -= absorbed;
+
+        amount -= absorbed;
+
+      }
+
+      if (amount > 0) {
+
+        victim.hp -= amount;
+
+      }
+      if (victim.hp <= 0) {
+
+        victim.hp = 0;
+
+        victim.alive = false;
+
+        spawnBurstParticles(victim.x, victim.y, victim.color, 26);
+        brState.pickups.push({
+
+          x: victim.x,
+
+          y: victim.y,
+
+          type: Math.random() > 0.5 ? 'shield' : 'medkit',
+
+          bob: 0
+
+        });
+        const killer = brState.fighters.find(f => f.id === killerId);
+
+        if (killer) killer.kills++;
+        pushKillFeed(killerName, victim.name, victim.isPlayer || isPlayerKiller);
+
+        checkMatchEndState();
+
+      }
+
+    }
+    function checkMatchEndState() {
+
+      const aliveFighters = brState.fighters.filter(f => f.alive);
+
+      const player = brState.player;
+      if (!player.alive) {
+
+        endBattleRoyaleMatch(false, aliveFighters.length + 1);
+
+      } else if (aliveFighters.length === 1 && aliveFighters[0].isPlayer) {
+
+        endBattleRoyaleMatch(true, 1);
+
+      }
+
+    }
+    function endBattleRoyaleMatch(victory, rank) {
+
+      brState.running = false;
+
+      const endScreen = document.getElementById('brEndScreen');
